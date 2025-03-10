@@ -1,0 +1,19 @@
+<lib-basic-report-lib
+  [data]="tableData"
+  [columns]="columns"
+  [title]="'Employee Report'"
+  [placeholderText]="'Employees'"
+  [showActions]="true"
+  [actionButtons]="actionButtons"
+  [tableHeight]="'400px'"
+  [enableExcelExport]="true"
+  [pagination]="true"
+  [itemsPerPage]="10"
+  [filterSession]="true"
+  [isSearchEnabled]="true"
+  (actionClick)="handleAction($event)"
+></lib-basic-report-lib>
+
+
+
+

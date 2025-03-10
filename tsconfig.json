@@ -1,6 +1,10 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
+  "compilerPaths": {
+    "@libs/*": [
+      "projects/libs/*/src/lib"
+    ]
+  },
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -8,6 +12,28 @@
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
+    "paths": {
+      "@libs/ag-grid-lib": [
+        "dist/libs/ag-grid-lib"
+      ],
+      "@libs/basic-report-lib": [
+        "dist/libs/basic-report-lib",
+        "dist/libs/basic-report-lib"
+      ],
+      "@libs/multi-dropdown-lib": [
+        "dist/libs/multi-dropdown-lib"
+      ],
+      "ag-grid-lib": [
+        "dist/ag-grid-lib",
+        "dist/ag-grid-lib"
+      ],
+      "basic-report-lib": [
+        "dist/reports/basic-report-lib"
+      ],
+      "left-menu-lib": [
+        "dist/left-menu-lib"
+      ]
+    },
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,

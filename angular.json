@@ -1,7 +1,345 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-  }
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"version": 1,
+	"newProjectRoot": "projects",
+	"projects": {
+		"shell": {
+			"projectType": "application",
+			"schematics": {},
+			"root": "projects/shell",
+			"sourceRoot": "projects/shell/src",
+			"prefix": "app",
+			"architect": {
+				"build": {
+					"builder": "ngx-build-plus:browser",
+					"options": {
+						"outputPath": "dist/shell",
+						"index": "projects/shell/src/index.html",
+						"main": "projects/shell/src/main.ts",
+						"polyfills": [
+							"zone.js"
+						],
+						"tsConfig": "projects/shell/tsconfig.app.json",
+						"assets": [
+							"projects/shell/src/favicon.ico",
+							"projects/shell/src/assets"
+						],
+						"styles": [
+							"projects/shell/src/styles.css",
+							"node_modules/ag-grid-community/styles/ag-grid.css",
+							"node_modules/ag-grid-community/styles/ag-theme-alpine.css"
+						],
+						"scripts": [],
+						"extraWebpackConfig": "projects/shell/webpack.config.js",
+						"commonChunk": false
+					},
+					"configurations": {
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kb",
+									"maximumError": "1mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "2kb",
+									"maximumError": "4kb"
+								}
+							],
+							"outputHashing": "all",
+							"extraWebpackConfig": "projects/shell/webpack.prod.config.js"
+						},
+						"development": {
+							"buildOptimizer": false,
+							"optimization": false,
+							"vendorChunk": true,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "ngx-build-plus:dev-server",
+					"configurations": {
+						"production": {
+							"browserTarget": "shell:build:production",
+							"extraWebpackConfig": "projects/shell/webpack.prod.config.js"
+						},
+						"development": {
+							"browserTarget": "shell:build:development"
+						}
+					},
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4200,
+						"publicHost": "http://localhost:4200",
+						"extraWebpackConfig": "projects/shell/webpack.config.js"
+					}
+				},
+				"extract-i18n": {
+					"builder": "ngx-build-plus:extract-i18n",
+					"options": {
+						"browserTarget": "shell:build",
+						"extraWebpackConfig": "projects/shell/webpack.config.js"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						],
+						"tsConfig": "projects/shell/tsconfig.spec.json",
+						"assets": [
+							"projects/shell/src/favicon.ico",
+							"projects/shell/src/assets"
+						],
+						"styles": [
+							"projects/shell/src/styles.css"
+						],
+						"scripts": []
+					}
+				}
+			}
+		},
+		"@libs/left-menu-lib": {
+			"projectType": "library",
+			"root": "projects/libs/left-menu-lib",
+			"sourceRoot": "projects/libs/left-menu-lib/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/libs/left-menu-lib/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/libs/left-menu-lib/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/libs/left-menu-lib/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"tsConfig": "projects/libs/left-menu-lib/tsconfig.spec.json",
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						]
+					}
+				}
+			}
+		},
+		"@libs/ag-grid-lib": {
+			"projectType": "library",
+			"root": "projects/libs/ag-grid-lib",
+			"sourceRoot": "projects/libs/ag-grid-lib/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/libs/ag-grid-lib/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/libs/ag-grid-lib/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/libs/ag-grid-lib/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"tsConfig": "projects/libs/ag-grid-lib/tsconfig.spec.json",
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						]
+					}
+				}
+			}
+		},
+		"core": {
+			"projectType": "application",
+			"schematics": {},
+			"root": "projects/core",
+			"sourceRoot": "projects/core/src",
+			"prefix": "app",
+			"architect": {
+				"build": {
+					"builder": "ngx-build-plus:browser",
+					"options": {
+						"outputPath": "dist/core",
+						"index": "projects/core/src/index.html",
+						"main": "projects/core/src/main.ts",
+						"polyfills": [
+							"zone.js"
+						],
+						"tsConfig": "projects/core/tsconfig.app.json",
+						"assets": [
+							"projects/core/src/favicon.ico",
+							"projects/core/src/assets"
+						],
+						"styles": [
+							"projects/core/src/styles.css",
+							"node_modules/ag-grid-community/styles/ag-grid.css",
+							"node_modules/ag-grid-community/styles/ag-theme-alpine.css"
+						],
+						"scripts": [],
+						"extraWebpackConfig": "projects/core/webpack.config.js",
+						"commonChunk": false
+					},
+					"configurations": {
+						"production": {
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "500kb",
+									"maximumError": "1mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "2kb",
+									"maximumError": "4kb"
+								}
+							],
+							"outputHashing": "all",
+							"extraWebpackConfig": "projects/core/webpack.prod.config.js"
+						},
+						"development": {
+							"buildOptimizer": false,
+							"optimization": false,
+							"vendorChunk": true,
+							"extractLicenses": false,
+							"sourceMap": true,
+							"namedChunks": true
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"serve": {
+					"builder": "ngx-build-plus:dev-server",
+					"configurations": {
+						"production": {
+							"browserTarget": "core:build:production",
+							"extraWebpackConfig": "projects/core/webpack.prod.config.js"
+						},
+						"development": {
+							"browserTarget": "core:build:development"
+						}
+					},
+					"defaultConfiguration": "development",
+					"options": {
+						"port": 4201,
+						"publicHost": "http://localhost:4201",
+						"extraWebpackConfig": "projects/core/webpack.config.js"
+					}
+				},
+				"extract-i18n": {
+					"builder": "ngx-build-plus:extract-i18n",
+					"options": {
+						"browserTarget": "core:build",
+						"extraWebpackConfig": "projects/core/webpack.config.js"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						],
+						"tsConfig": "projects/core/tsconfig.spec.json",
+						"assets": [
+							"projects/core/src/favicon.ico",
+							"projects/core/src/assets"
+						],
+						"styles": [
+							"projects/core/src/styles.css"
+						],
+						"scripts": []
+					}
+				}
+			}
+		},
+		"@libs/multi-dropdown-lib": {
+			"projectType": "library",
+			"root": "projects/libs/multi-dropdown-lib",
+			"sourceRoot": "projects/libs/multi-dropdown-lib/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/libs/multi-dropdown-lib/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/libs/multi-dropdown-lib/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/libs/multi-dropdown-lib/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"tsConfig": "projects/libs/multi-dropdown-lib/tsconfig.spec.json",
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						]
+					}
+				}
+			}
+		},
+		"@libs/basic-report-lib": {
+			"projectType": "library",
+			"root": "projects/libs/basic-report-lib",
+			"sourceRoot": "projects/libs/basic-report-lib/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/libs/basic-report-lib/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/libs/basic-report-lib/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/libs/basic-report-lib/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"tsConfig": "projects/libs/basic-report-lib/tsconfig.spec.json",
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						]
+					}
+				}
+			}
+		}
+	}
 }

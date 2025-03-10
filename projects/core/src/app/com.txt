@@ -1,0 +1,3794 @@
+<!-- <p>usermanagement works!</p>
+<lib-ag-grid-lib
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [pagination]="true"
+    [buttonIcon]="'🖊️'"
+    (rowButtonClick)="onRowButtonClick($event)">
+    >
+</lib-ag-grid-lib> -->
+
+<hr>
+
+<lib-multi-dropdown-lib
+[data]="rolesList"
+[textField]="'roleName'"
+[idField]="'_id'"
+[singleSelection]="false"
+[selectAllText]="'Select All'"
+[unSelectAllText]="'Unselect All'"
+[itemsShowLimit]="5"  
+[selectedItems]="selectedItems" 
+[allowSearchFilter]="true"
+[enableCheckAll]="true"
+[maxHeight]="100"
+[closeDropDownOnSelection]="false"
+[clearSearchFilter]="true"
+[searchPlaceholderText]="'Search...'"
+[noDataAvailablePlaceholderText]="'No items available'"
+[allowRemoteDataSearch]="false"
+(selectionChange)="onSelectionChange($event)">
+
+</lib-multi-dropdown-lib>
+
+
+<button type="submit" (click)="onSubmit()">Submit</button>
+
+
+
+
+ <lib-multi-dropdown-lib
+      [data]="rolesList"
+      [selectedItems]="selectedRoles"
+      [singleSelection]="false"
+      [idField]="'_id'"
+      [textField]="'roleName'"
+      [allowSearchFilter]="true"
+      [searchPlaceholderText]="'dsfe'"
+      [enableCheckAll]="true"
+      [selectAllText]="'Select All'"
+      [unSelectAllText]="'Unselect All'"
+      [itemsSelectedShowLimit]="2"
+      [closeDropDownOnSelection]="false"
+      [maxHeight]="400"
+      [itemsShowLimit]="3"
+      (selectionChange)="onRolesSelectionChange($event)"
+      [showClearButton]="true" 
+      [hideListByDefault]="false" 
+      [maxSelectionLimit]="3"
+      [isRequired]="true"
+
+
+    ></lib-multi-dropdown-lib>
+
+
+--------------------------------------------------------------------------------------------------
+
+<!-- title -->
+<div class="w-full h-full bg-gray-100 p-4 overflow-y-auto">
+  <div class="w-full border-l-4 border-[#0F00DA] h-auto px-2 sm:px-4">
+    <div class="flex mb-1 text-xs sm:text-base lg:text-base items-center space-x-1 md:mb-4 lg:mb-4">
+      Employee Details
+    </div>
+  </div>
+
+  <!-- Header Section -->
+  <div
+    class="p-4 md:mb-8 bg-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-3 border border-gray-50 rounded-2xl">
+    <!-- Employees Count Section -->
+    <div class="flex items-center gap-3 mb-3 md:mb-0">
+      <div class="text-gray-700 font-medium text-[10px] sm:text-xs md:text-sm lg:text-sm">
+        Employees
+      </div>
+      <div class="bg-green-200 text-green-500 text-[10px] sm:text-xs px-2 py-1 rounded-full border border-green-500">
+        {{ employeeCount }}
+      </div>
+    </div>
+
+    <!-- Search Bar Section -->
+    <div class="flex items-center gap-3 w-full md:w-[500px] mx-4 mb-3 md:mb-0">
+      <div class="relative w-full">
+        <input type="text" placeholder="Search an employee..."
+          class="w-full pl-8 pr-4 py-1.5 sm:py-2 border-0 bg-gray-50 text-[10px] sm:text-xs focus:outline-none focus:ring-1 focus:ring-blue-400 rounded-md"
+          (input)="searchEmployees($event)" id="employeeSearchBox" />
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="flex items-center gap-3 flex-wrap justify-center">
+      <!-- Clear Filters Button -->
+      <div class="flex items-center">
+        <button class="text-[10px] sm:text-xs text-red-500 pr-2 sm:pr-4">
+          Clear Filters
+        </button>
+
+        <!-- Attendance Dropdown -->
+        <div class="relative">
+          <button (click)="toggleAttendanceDropdown()"
+            class="attendance-filter-button flex items-center border rounded-lg px-2 py-1.5 text-xs" [ngClass]="{
+              'bg-blue-50 text-blue-700': currentAttendanceFilter.length > 0,
+              'text-gray-700': currentAttendanceFilter.length == 0
+            }">
+            <span class="md:mr-4" [ngClass]="{
+                'text-blue-700': currentAttendanceFilter.length > 0,
+                'text-gray-700': currentAttendanceFilter.length == 0
+              }">
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <!-- Attendance Dropdown Menu -->
+          <div *ngIf="showAttendanceDropdown"
+            class="attendance-dropdown flex flex-col absolute z-50 w-[150px] sm:w-[200px] mt-2 bg-white border border-gray-200 rounded-xl shadow-lg right-0">
+            <!-- Dropdown Content -->
+            <div class="flex justify-between px-3 py-2">
+              <button class="text-[10px] sm:text-xs text-red-500 hover:text-red-800">
+                Reset
+              </button>
+              <button class="text-[10px] sm:text-xs text-black px-2 py-1 rounded-lg"
+                (click)="toggleAttendanceDropdown()" aria-label="Close">
+                <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Select All Button -->
+            <div class="px-4 flex justify-end">
+              <button class="text-[10px] sm:text-xs text-blue-600 hover:text-blue-800">
+                Select All
+              </button>
+            </div>
+
+            <!-- Attendance Filters with Checkboxes -->
+            <div class="flex flex-col p-2">
+              <label *ngFor="let filter of attendanceFilters"
+                class="flex items-center text-[10px] sm:text-xs hover:bg-gray-100 px-2 py-1 border-b border-gray-100">
+                <input *ngIf="filter.value !== 'ALL'" type="checkbox" [checked]="filter.checked"
+                  class="mr-2 rounded text-blue-500 focus:ring-blue-400" />
+                {{ filter.label }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Employees Dropdown -->
+      <div class="relative">
+        <button (click)="toggleActiveEmployeesDropdown()"
+          class="active-employees-button flex items-center border rounded-lg px-2 py-1 text-[10px] sm:text-xs"
+          [ngClass]="{
+            'bg-blue-50 text-blue-700': currentActiveFilter !== null,
+            'text-gray-700': currentActiveFilter === null
+          }">
+          <span class="md:mr-4">g</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4 ml-1" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <!-- Active Employees Dropdown Menu -->
+        <div *ngIf="showActiveEmployeesDropdown"
+          class="active-employees-dropdown flex flex-col absolute z-10 w-[150px] sm:w-[200px] mt-2 bg-white border border-gray-200 rounded-xl shadow-lg right-0">
+          <!-- Dropdown Content -->
+          <div class="flex justify-between px-3 py-2">
+            <button class="text-[10px] sm:text-xs text-red-500 hover:text-red-800"></button>
+            <button class="text-[10px] sm:text-xs text-black px-2 py-1 rounded-lg"
+              (click)="toggleActiveEmployeesDropdown()" aria-label="Close">
+              <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Select All Button -->
+          <div class="px-4 flex justify-end">
+            <button class="text-[10px] sm:text-xs text-blue-600 hover:text-blue-800">
+              Select All
+            </button>
+          </div>
+
+          <!-- Active Filters with Checkboxes -->
+          <div class="flex flex-col p-2 pt-0">
+            <label *ngFor="let filter of activeFilters"
+              class="flex items-center text-[10px] sm:text-xs hover:bg-gray-100 px-2 py-1 border-b border-gray-100">
+              <input *ngIf="filter.value !== 'ALL'" type="checkbox" [checked]="filter.checked"
+                (change)="applyActiveFilter(filter)" class="mr-2 rounded text-blue-500 focus:ring-blue-400" />
+              {{ filter.label }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Department Dropdown -->
+      <div class="relative">
+        <button>d</button>
+
+        <!-- Department Dropdown Menu -->
+        <div *ngIf="showDepartmentDropdown"
+          class="z-50 p-4 department-dropdown flex flex-col absolute w-[70vw] max-h-[80vh] overflow-y-auto sm:w-[400px] sm:max-h-[650px] mt-2 bg-white border border-gray-200 rounded-xl shadow-lg right-0">
+          <!-- Dropdown Content -->
+          <div class="flex justify-between px-4 py-2">
+            <button class="text-[10px] sm:text-xs text-red-500 hover:text-red-800">
+              Reset
+            </button>
+
+            <button class="text-[10px] sm:text-xs text-black px-2 py-1 rounded-lg" (click)="toggleDepartmentDropdown()"
+              aria-label="Close">
+              <svg class="w-3 h-3 sm:w-4 sm:h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Search Bar -->
+          <div class="p-2 relative">
+            <svg xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 pl-2 absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" [(ngModel)]="departmentSearchTerm" placeholder="Search departments..."
+              class="w-full pl-8 px-2 py-1 text-[10px] sm:text-xs bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-400 rounded-md" />
+          </div>
+
+          <!-- Select All Button -->
+          <div class="px-4 flex justify-end">
+            <button class="text-[10px] sm:text-xs text-blue-600 hover:text-blue-800">
+              Select All
+            </button>
+          </div>
+
+          <!-- Department List -->
+          <div class="flex flex-col min-w-60 overflow-y-auto">
+            <div *ngFor="let department of []" class="flex items-center p-2 hover:bg-gray-100">
+              <input type="checkbox" [id]="department" [(ngModel)]="selectedDepartments[department]"
+                class="mr-2 rounded text-blue-500 focus:ring-blue-400" />
+              <label [for]="department" class="text-[10px] sm:text-xs text-gray-700 flex-grow">
+                {{ department }}
+
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div
+    class="overflow-y-auto bg-white border-2 border-gray-50 rounded-lg max-h-[calc(100vh-300px)] mt-4 mb-8 sm:mt-0 sm:mb-0">
+    <ng-container *ngIf="displayedEmployees.length > 0; else noResult">
+      <table class="w-full table-auto">
+        <thead class="sticky top-0 bg-gray-50 shadow">
+          <tr class="border-b">
+            <th class="px-2 sm:px-4 py-1 sm:py-3 text-left text-[10px] sm:text-sm font-medium text-gray-600">
+              Employee Name
+            </th>
+            <th class="px-2 sm:px-4 py-1 sm:py-3 text-left text-[10px] sm:text-sm font-medium text-gray-600">
+              Department
+            </th>
+            <th class="hidden md:table-cell px-4 py-3 text-left text-sm font-medium text-gray-600">
+              Designation
+            </th>
+            <th class="px-2 sm:px-4 py-1 sm:py-3 text-left text-[10px] sm:text-sm font-medium text-gray-600">
+              Employee Code
+            </th>
+            <th class="hidden md:table-cell px-4 py-3 text-left text-sm font-medium text-gray-600">
+              Contact
+            </th>
+            <th class="hidden md:table-cell px-4 py-3 text-left text-sm font-medium text-gray-600">
+              Joining Date
+            </th>
+            <th class="px-2 sm:px-4 py-1 sm:py-3 text-left text-[10px] sm:text-sm font-medium text-gray-600">
+              Today's Attendance
+            </th>
+            <th class="px-2 sm:px-4 py-1 sm:py-3 text-left w-8"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of displayedEmployees" class="border-b hover:bg-gray-50">
+            <td class="px-2 sm:px-4 py-1 sm:py-3">
+              <div class="flex items-center">
+                <button class="flex-shrink-0 h-6 w-6 sm:h-8 sm:w-8 mr-2 sm:mr-3">
+                  <img class="h-6 w-6 sm:h-8 sm:w-8 rounded-full" src="assets/FF.png" alt="" />
+                </button>
+                <div>
+                  <button (click)="navigateToOverview(employee.email, employee.empId)"
+                    class="text-[10px] sm:text-sm font-medium text-gray-900 truncate">
+                    {{ employee.name }}
+                  </button>
+                  <div class="text-[8px] sm:text-xs text-gray-500 truncate">
+                    {{ employee.email }}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td class="px-2 sm:px-4 py-1 sm:py-3 text-[10px] sm:text-xs text-gray-600 break-words max-w-[150px]">
+              {{ employee.department }}
+            </td>
+            <td class="hidden md:table-cell px-4 py-3 text-xs text-gray-600 break-words max-w-[150px]">
+              {{ employee.designation }}
+            </td>
+            <td class="px-2 sm:px-4 py-1 sm:py-3 text-[10px] sm:text-xs text-gray-600 truncate">
+              {{ employee.empId }}
+            </td>
+            <td class="hidden md:table-cell px-4 py-3 text-xs text-gray-600 truncate">
+              {{ employee.contact }}
+            </td>
+            <td class="hidden md:table-cell px-4 py-3 text-xs text-gray-600 truncate">
+              {{ employee.joiningDate }}
+            </td>
+            <td class="px-2 sm:px-4 py-1 sm:py-3">
+              <div class="flex flex-wrap items-start p-1 sm:p-2">
+                <ng-container *ngIf="
+                    employee.todayAttendance.statusList &&
+                    employee.todayAttendance.statusList.length > 0
+                  ">
+                  <span *ngFor="
+                      let statusCode of employee.todayAttendance.statusList
+                    "
+                    class="text-[8px] sm:text-xs px-1 sm:px-2 py-0.5 sm:py-1 rounded-full mr-1 sm:mr-2 mb-0.5 sm:mb-1"
+                    [ngClass]="[
+                      getStatusStyle(statusCode).bg,
+                      getStatusStyle(statusCode).text
+                    ]">
+                    {{ statusCode }}
+                  </span>
+                </ng-container>
+                <ng-container *ngIf="employee.todayAttendance.inTime">
+                  <div class="text-[8px] sm:text-xs text-green-600 bg-green-100 rounded-xl mr-1 sm:mr-2 p-0.5 sm:p-1">
+                    {{ employee.todayAttendance.inTime }}
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="employee.todayAttendance.outTime">
+                  <div class="text-[8px] sm:text-xs text-gray-600 bg-gray-100 rounded-xl mr-1 sm:mr-2 p-0.5 sm:p-1">
+                    {{ employee.todayAttendance.outTime }}
+                  </div>
+                </ng-container>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <ng-template #noResult>
+      <div class="text-red-500 text-center font-medium py-4">
+        No result found
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Pagination Section -->
+  <div
+    class="z-50 px-4 py-3 flex flex-wrap items-center justify-center w-full bg-gray-50 shadow-md border-t border-gray-200 fixed left-0 right-0 bottom-[15px]">
+    <!-- Previous Button -->
+    <button (click)="previousPage()" [disabled]="currentPage === 1"
+      class="flex items-center px-2 py-1 sm:px-3 sm:py-1 text-[8px] sm:text-[10px] md:text-xs text-gray-600 hover:text-gray-900 border border-gray-300 rounded-lg mr-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4 mr-1" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Previous
+    </button>
+
+    <!-- Pagination Buttons -->
+    <div class="flex flex-wrap items-center space-x-1">
+      <button *ngFor="let page of getPaginationRange(); let i = index"
+        (click)="page !== '...' ? changePage(page) : null"
+        class="px-2 py-1 sm:px-3 sm:py-1 text-[8px] sm:text-[10px] md:text-xs rounded-md" [ngClass]="{
+          'bg-blue-50 text-blue-600 font-medium': currentPage === page,
+          'cursor-default': page === '...'
+        }">
+        {{ page }}
+      </button>
+    </div>
+
+    <!-- Next Button -->
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+      class="ml-2 flex items-center px-2 py-1 sm:px-3 sm:py-1 text-[8px] sm:text-[10px] md:text-xs text-gray-600 hover:text-gray-900 border border-gray-300 rounded-lg">
+      Next
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4 ml-1" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------
+
+
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-usermanagement',
+  templateUrl: './usermanagement.component.html',
+  styleUrls: ['./usermanagement.component.css']
+})
+export class UsermanagementComponent {
+    // Dropdown and filter states
+    showActiveEmployeesDropdown: boolean = false;
+    currentActiveFilter: boolean | null = null; // null means no filter, true means active, false means inactive
+    showDepartmentDropdown: boolean = false;
+    showAttendanceDropdown: boolean = false;
+  
+    // Employee data
+    employees: {
+      name: string;
+      department: string;
+      designation: string;
+      empId: string;
+      contact: string;
+      joiningDate: string;
+      email: string;
+      activeStatus: boolean;
+      todayAttendance: {
+        statusList: string[];
+        inTime: string;
+        outTime: string;
+      };
+    }[] =  [
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+    ];
+  
+    filteredEmployees: typeof this.employees = [];
+    displayedEmployees: typeof this.employees = [];
+  
+    // Department filter
+    departmentSearchTerm: string = '';
+    selectedDepartments: { [key: string]: boolean } = {};
+    allDepartments: string[] = [];
+  
+    // Attendance filter
+    currentAttendanceFilter: string[] = [];
+    attendanceFilters = [
+      { label: 'Absent', value: ['ABSENT', 'AB PM', 'AB AM'], checked: false },
+      { label: 'Casual Leaves', value: ['CLFD', 'CLHD AM', 'CLHD PM'], checked: false },
+      { label: 'On Duty Leaves', value: ['OODFD', 'OODHD AM', 'OODHD PM'], checked: false },
+      { label: 'Late In', value: 'LATE_PUNCH_IN', checked: false },
+      { label: 'Early Out', value: 'EARLY_PUNCH_OUT', checked: false },
+      { label: 'Others', value: 'OTHERS', checked: false },
+    ];
+  
+    // Active status filter
+    activeFilters = [
+      { value: 'ALL', checked: false },
+      { label: 'Active Employees', value: true, checked: false },
+      { label: 'Inactive Employees', value: false, checked: false },
+    ];
+  
+    // Search and pagination
+    searchTerm: string = '';
+    employeeCount = this.employees.length;
+    currentPage = 1;
+    pageSize = 8; // Show 8 employees per page
+    totalPages = Math.ceil(this.employeeCount / this.pageSize);
+  isAllSelected: boolean = false;
+  
+    constructor(private readonly router: Router, private readonly cdr: ChangeDetectorRef) {
+      this.updateDisplayedEmployees();
+      this.initializeDepartments();
+    }
+  
+    ngOnInit(): void {
+      this.filteredEmployees = this.employees;
+      this.employeeCount = this.employees.length;
+      this.totalPages = Math.ceil(this.employees.length / this.pageSize);
+      this.initializeDepartments();
+      this.updateDisplayedEmployees();
+    }
+  
+    // Initialize departments from employee data
+    initializeDepartments(): void {
+      this.allDepartments = [...new Set(this.employees.map((emp) => emp.department))].sort((a, b) =>
+        a.localeCompare(b)
+      );
+      this.allDepartments.forEach((dept) => {
+        if (!this.selectedDepartments.hasOwnProperty(dept)) {
+          this.selectedDepartments[dept] = false;
+        }
+      });
+    }
+  
+    // Update displayed employees based on filters and pagination
+    updateDisplayedEmployees(): void {
+      let filtered = this.employees;
+  
+      // Apply active status filter
+      if (this.currentActiveFilter !== null) {
+        filtered = filtered.filter((employee) => employee.activeStatus === this.currentActiveFilter);
+      }
+  
+      // Apply attendance filter
+      if (this.currentAttendanceFilter.length > 0) {
+        filtered = filtered.filter((employee) => {
+          const statusList = employee.todayAttendance.statusList || [];
+          return this.currentAttendanceFilter.some((status) => statusList.includes(status));
+        });
+      }
+  
+      // Apply department filter
+      const selectedDepartments = Object.keys(this.selectedDepartments).filter(
+        (key) => this.selectedDepartments[key]
+      );
+      if (selectedDepartments.length > 0) {
+        filtered = filtered.filter((employee) => selectedDepartments.includes(employee.department));
+      }
+  
+      // Apply search term filter
+      if (this.searchTerm) {
+        filtered = filtered.filter(
+          (employee) =>
+            employee.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            employee.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            employee.empId.toLowerCase().includes(this.searchTerm.toLowerCase())
+        );
+      }
+  
+      // Update filteredEmployees and pagination
+      this.filteredEmployees = filtered;
+      this.employeeCount = this.filteredEmployees.length;
+      this.totalPages = Math.ceil(this.employeeCount / this.pageSize);
+  
+      // Ensure currentPage is within valid range
+      if (this.currentPage > this.totalPages) {
+        this.currentPage = 1;
+      }
+  
+      // Slice the filteredEmployees array based on the current page and page size
+      const startIndex = (this.currentPage - 1) * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      this.displayedEmployees = this.filteredEmployees.slice(startIndex, endIndex);
+    }
+  
+    // Toggle department dropdown
+    toggleDepartmentDropdown(): void {
+      this.showDepartmentDropdown = !this.showDepartmentDropdown;
+      this.departmentSearchTerm = '';
+      this.isAllSelected = false;
+    }
+  
+    // Toggle attendance dropdown
+    toggleAttendanceDropdown(): void {
+      this.showAttendanceDropdown = !this.showAttendanceDropdown;
+    }
+  
+    // Toggle active employees dropdown
+    toggleActiveEmployeesDropdown(): void {
+      this.showActiveEmployeesDropdown = !this.showActiveEmployeesDropdown;
+    }
+  
+    // Apply active filter
+    applyActiveFilter(filter: any): void {
+      if (filter.value === 'ALL') {
+        const allChecked = !filter.checked;
+        this.activeFilters.forEach((f) => (f.checked = allChecked));
+      } else {
+        filter.checked = !filter.checked;
+      }
+      this.updateCurrentActiveFilter();
+    }
+  
+    // Update current active filter
+    updateCurrentActiveFilter(): void {
+      const selectedStatuses = this.activeFilters
+        .filter((filter) => filter.checked && filter.value !== 'ALL')
+        .map((filter) => filter.value);
+  
+      if (selectedStatuses.length === 0) {
+        this.currentActiveFilter = null;
+      } else if (selectedStatuses.includes(true) && selectedStatuses.includes(false)) {
+        this.currentActiveFilter = null;
+      } else if (selectedStatuses.includes(true)) {
+        this.currentActiveFilter = true;
+      } else if (selectedStatuses.includes(false)) {
+        this.currentActiveFilter = false;
+      }
+  
+      this.updateDisplayedEmployees();
+    }
+  
+    // Reset all filters
+    resetAll(): void {
+      this.activeFilters.forEach((filter) => (filter.checked = false));
+      this.currentActiveFilter = true;
+      this.showActiveEmployeesDropdown = false;
+      this.searchTerm = '';
+      this.selectedDepartments = {};
+      this.allDepartments.forEach((dept) => (this.selectedDepartments[dept] = false));
+      this.departmentSearchTerm = '';
+      this.isAllSelected = false;
+      this.attendanceFilters.forEach((filter) => (filter.checked = false));
+      this.currentAttendanceFilter = [];
+      this.updateDisplayedEmployees();
+      this.cdr.detectChanges();
+    }
+  
+    // Navigate to employee overview
+    navigateToOverview(email: string, empid: string): void {
+      localStorage.setItem('email', email);
+      localStorage.setItem('empid', empid);
+      this.router.navigate(['/employee-details/overview']);
+    }
+  
+    // Handle search input
+    searchEmployees(event: Event): void {
+      const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
+      this.searchTerm = searchTerm;
+      this.currentPage = 1;
+      this.updateDisplayedEmployees();
+    }
+  
+    // Get pagination range
+    getPaginationRange(): (number | string)[] {
+      const range: (number | string)[] = [];
+      const total = this.totalPages;
+      const current = this.currentPage;
+      const delta = 2; // Number of pages to show around the current page
+  
+      // Always show the first page
+      range.push(1);
+  
+      // Add dots if the current page is far from the first page
+      if (current - delta > 2) {
+        range.push('...');
+      }
+  
+      // Add pages around the current page
+      for (
+        let i = Math.max(2, current - delta);
+        i <= Math.min(total - 1, current + delta);
+        i++
+      ) {
+        range.push(i);
+      }
+  
+      // Add dots if the current page is far from the last page
+      if (current + delta < total - 1) {
+        range.push('...');
+      }
+  
+      // Always show the last page
+      if (total > 1) {
+        range.push(total);
+      }
+  
+      console.log("my range:",range);
+      
+      return range;
+    }
+  
+    // Change page
+    changePage(page: number | string): void {
+      if (typeof page === 'number') {
+        this.currentPage = page;
+        this.updateDisplayedEmployees();
+      }
+    }
+  
+    // Go to previous page
+    previousPage(): void {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.updateDisplayedEmployees();
+      }
+    }
+  
+    // Go to next page
+    nextPage(): void {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.updateDisplayedEmployees();
+      }
+    }
+  
+    // Get status style
+    getStatusStyle(status: string): { bg: string; text: string } {
+      const styles: Record<string, { bg: string; text: string }> = {
+        ABSENT: { bg: 'bg-red-200', text: 'text-red-600' },
+        'AB AM': { bg: 'bg-red-100', text: 'text-red-500' },
+        'AB PM': { bg: 'bg-red-50', text: 'text-red-400' },
+        CLFD: { bg: 'bg-purple-100', text: 'text-purple-500' },
+        'CLHD AM': { bg: 'bg-green-100', text: 'text-green-300' },
+        'CLHD PM': { bg: 'bg-teal-200', text: 'text-teal-600' },
+        OODFD: { bg: 'bg-pink-200', text: 'text-pink-600' },
+        'OODHD AM': { bg: 'bg-indigo-100', text: 'text-indigo-500' },
+        'OODHD PM': { bg: 'bg-blue-200', text: 'text-blue-600' },
+        HOLIDAY: { bg: 'bg-orange-200', text: 'text-orange-600' },
+        'HOLIDAY AM': { bg: 'bg-orange-100', text: 'text-orange-500' },
+        'HOLIDAY PM': { bg: 'bg-orange-50', text: 'text-orange-400' },
+        PH: { bg: 'bg-yellow-100', text: 'text-yellow-500' },
+        OFF: { bg: 'bg-blue-100', text: 'text-blue-500' },
+        OPTLV: { bg: 'bg-violet-100', text: 'text-violet-500' },
+        '1HOUR': { bg: 'bg-violet-200', text: 'text-blue-700' },
+        SPLV: { bg: 'bg-purple-200', text: 'text-purple-700' },
+      };
+  
+      // Return default style if status not found
+      return styles[status] || { bg: 'bg-gray-100', text: 'text-gray-700' };
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ---------------------------------------------------------------------------------------------
+
+  <!-- title -->
+<div class="w-full h-full bg-gray-100 p-4 overflow-y-auto">
+  <div class="w-full border-l-4 border-[#0F00DA] h-auto px-2 sm:px-4">
+    <div class="flex mb-1 text-xs sm:text-base lg:text-base items-center space-x-1 md:mb-4 lg:mb-4">
+      Employee Details
+    </div>
+  </div>
+
+  <!-- Header Section -->
+  <div
+    class="p-4 md:mb-8 bg-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-3 border border-gray-50 rounded-2xl">
+    <!--  Count Section -->
+    <div class="flex items-center gap-3 mb-3 md:mb-0">
+      <div class="text-gray-700 font-medium text-[10px] sm:text-xs md:text-sm lg:text-sm">
+        Count
+      </div>
+      <div class="bg-green-200 text-green-500 text-[10px] sm:text-xs px-2 py-1 rounded-full border border-green-500">
+        {{ employeeCount }}
+      </div>
+    </div>
+
+    <!-- Search Bar Section -->
+    <div class="flex items-center gap-3 w-full md:w-[500px] mx-4 mb-3 md:mb-0">
+      <div class="relative w-full">
+        <input type="text" placeholder="Search Here..."
+          class="w-full pl-8 pr-4 py-1.5 sm:py-2 border-0 bg-gray-50 text-[10px] sm:text-xs focus:outline-none focus:ring-1 focus:ring-blue-400 rounded-md"
+          (input)="searchEmployees($event)"  />
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="flex items-center gap-3 flex-wrap justify-center">
+     
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div
+    class="overflow-y-auto bg-white border-2 border-gray-50 rounded-lg max-h-[calc(100vh-300px)] mt-4 mb-8 sm:mt-0 sm:mb-0">
+    <ng-container *ngIf="displayedItems.length > 0; else noResult">
+      <table class="w-full table-auto">
+        <thead class="sticky top-0 bg-gray-50 shadow">
+          <tr class="border-b">
+            <th class="px-2 sm:px-4 py-1 sm:py-3 text-left text-[10px] sm:text-sm font-medium text-gray-600">
+              Employee Name
+            </th>
+            <th class="px-2 sm:px-4 py-1 sm:py-3 text-left text-[10px] sm:text-sm font-medium text-gray-600">
+              Department
+            </th>
+            <th class="hidden md:table-cell px-4 py-3 text-left text-sm font-medium text-gray-600">
+              Designation
+            </th>
+            <th class="px-2 sm:px-4 py-1 sm:py-3 text-left text-[10px] sm:text-sm font-medium text-gray-600">
+              Employee Code
+            </th>
+            <th class="hidden md:table-cell px-4 py-3 text-left text-sm font-medium text-gray-600">
+              Contact
+            </th>
+            <th class="hidden md:table-cell px-4 py-3 text-left text-sm font-medium text-gray-600">
+              Joining Date
+            </th>
+        
+            <th class="px-2 sm:px-4 py-1 sm:py-3 text-left w-8"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of displayedItems" class="border-b hover:bg-gray-50">
+            <td class="px-2 sm:px-4 py-1 sm:py-3">
+              <div class="flex items-center">
+                <button class="flex-shrink-0 h-6 w-6 sm:h-8 sm:w-8 mr-2 sm:mr-3">
+                  <img class="h-6 w-6 sm:h-8 sm:w-8 rounded-full" src="assets/FF.png" alt="" />
+                </button>
+                <div>
+                  <button 
+                    class="text-[10px] sm:text-sm font-medium text-gray-900 truncate">
+                    {{ item.name }}
+                  </button>
+                  <div class="text-[8px] sm:text-xs text-gray-500 truncate">
+                    {{ item.email }}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td class="px-2 sm:px-4 py-1 sm:py-3 text-[10px] sm:text-xs text-gray-600 break-words max-w-[150px]">
+              {{ item.department }}
+            </td>
+            <td class="hidden md:table-cell px-4 py-3 text-xs text-gray-600 break-words max-w-[150px]">
+              {{ item.designation }}
+            </td>
+            <td class="px-2 sm:px-4 py-1 sm:py-3 text-[10px] sm:text-xs text-gray-600 truncate">
+              {{ item.empId }}
+            </td>
+            <td class="hidden md:table-cell px-4 py-3 text-xs text-gray-600 truncate">
+              {{ item.contact }}
+            </td>
+            <td class="hidden md:table-cell px-4 py-3 text-xs text-gray-600 truncate">
+              {{ item.joiningDate }}
+            </td>
+         
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <ng-template #noResult>
+      <div class="text-red-500 text-center font-medium py-4">
+        No result found
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Pagination Section -->
+  <div
+    class="z-50 px-4 py-3 flex flex-wrap items-center justify-center w-full bg-gray-50 shadow-md border-t border-gray-200 fixed left-0 right-0 bottom-[15px]">
+    <!-- Previous Button -->
+    <button (click)="previousPage()" [disabled]="currentPage === 1"
+      class="flex items-center px-2 py-1 sm:px-3 sm:py-1 text-[8px] sm:text-[10px] md:text-xs text-gray-600 hover:text-gray-900 border border-gray-300 rounded-lg mr-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4 mr-1" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Previous
+    </button>
+
+    <!-- Pagination Buttons -->
+    <div class="flex flex-wrap items-center space-x-1">
+      <button *ngFor="let page of getPaginationRange(); let i = index"
+        (click)="page !== '...' ? changePage(page) : null"
+        class="px-2 py-1 sm:px-3 sm:py-1 text-[8px] sm:text-[10px] md:text-xs rounded-md" [ngClass]="{
+          'bg-blue-50 text-blue-600 font-medium': currentPage === page,
+          'cursor-default': page === '...'
+        }">
+        {{ page }}
+      </button>
+    </div>
+
+    <!-- Next Button -->
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+      class="ml-2 flex items-center px-2 py-1 sm:px-3 sm:py-1 text-[8px] sm:text-[10px] md:text-xs text-gray-600 hover:text-gray-900 border border-gray-300 rounded-lg">
+      Next
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4 ml-1" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+------------------------------------
+
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-usermanagement',
+  templateUrl: './usermanagement.component.html',
+  styleUrls: ['./usermanagement.component.css']
+})
+export class UsermanagementComponent {
+
+  employees: {
+    name: string;
+    department: string;
+    designation: string;
+    empId: string;
+    contact: string;
+    joiningDate: string;
+    email: string;
+    activeStatus: boolean;
+    todayAttendance: {
+      statusList: string[];
+      inTime: string;
+      outTime: string;
+    };
+  }[] = [
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'John Doe',
+        department: 'Engineering',
+        designation: 'Software Engineer',
+        empId: 'E001',
+        contact: '1234567890',
+        joiningDate: '2020-01-01',
+        email: 'john.doe@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['ABSENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Jane Smith',
+        department: 'HR',
+        designation: 'HR Manager',
+        empId: 'E002',
+        contact: '0987654321',
+        joiningDate: '2019-05-15',
+        email: 'jane.smith@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['CLFD'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Alice Johnson',
+        department: 'Engineering',
+        designation: 'Frontend Developer',
+        empId: 'E003',
+        contact: '9876543210',
+        joiningDate: '2021-03-10',
+        email: 'alice.johnson@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '08:45 AM',
+          outTime: '05:45 PM',
+        },
+      },
+      {
+        name: 'Bob Williams',
+        department: 'Finance',
+        designation: 'Financial Analyst',
+        empId: 'E004',
+        contact: '8765432109',
+        joiningDate: '2018-07-23',
+        email: 'bob.williams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:15 AM',
+          outTime: '06:15 PM',
+        },
+      },
+      {
+        name: 'Charlie Brown',
+        department: 'Marketing',
+        designation: 'Marketing Manager',
+        empId: 'E005',
+        contact: '7654321098',
+        joiningDate: '2017-11-30',
+        email: 'charlie.brown@example.com',
+        activeStatus: false,
+        todayAttendance: {
+          statusList: ['LEAVE'],
+          inTime: '',
+          outTime: '',
+        },
+      },
+      {
+        name: 'Daniel Garcia',
+        department: 'Engineering',
+        designation: 'Backend Developer',
+        empId: 'E006',
+        contact: '6543210987',
+        joiningDate: '2022-02-20',
+        email: 'daniel.garcia@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Emma Rodriguez',
+        department: 'HR',
+        designation: 'Recruiter',
+        empId: 'E007',
+        contact: '5432109876',
+        joiningDate: '2020-09-05',
+        email: 'emma.rodriguez@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:30 AM',
+          outTime: '05:30 PM',
+        },
+      },
+      {
+        name: 'Franklin Lee',
+        department: 'Support',
+        designation: 'Customer Support Executive',
+        empId: 'E008',
+        contact: '4321098765',
+        joiningDate: '2021-06-15',
+        email: 'franklin.lee@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['LATE'],
+          inTime: '10:15 AM',
+          outTime: '07:00 PM',
+        },
+      },
+      {
+        name: 'Grace Harris',
+        department: 'Engineering',
+        designation: 'QA Engineer',
+        empId: 'E009',
+        contact: '3210987654',
+        joiningDate: '2019-08-10',
+        email: 'grace.harris@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+      {
+        name: 'Henry Adams',
+        department: 'Sales',
+        designation: 'Sales Executive',
+        empId: 'E010',
+        contact: '2109876543',
+        joiningDate: '2018-10-25',
+        email: 'henry.adams@example.com',
+        activeStatus: true,
+        todayAttendance: {
+          statusList: ['PRESENT'],
+          inTime: '09:00 AM',
+          outTime: '06:00 PM',
+        },
+      },
+    ];
+
+  filteredEmployees: typeof this.employees = [];
+  displayedItems: typeof this.employees = [];
+
+  // Search and pagination
+  searchTerm: string = '';
+  employeeCount = this.employees.length;
+  currentPage = 1;
+  pageSize = 8; // Show 8 employees per page
+  totalPages = Math.ceil(this.employeeCount / this.pageSize);
+  isAllSelected: boolean = false;
+
+  constructor(private readonly router: Router, private readonly cdr: ChangeDetectorRef) {
+    this.updateDisplayedEmployees();
+  }
+
+  ngOnInit(): void {
+    this.filteredEmployees = this.employees;
+    this.employeeCount = this.employees.length;
+    this.totalPages = Math.ceil(this.employees.length / this.pageSize);
+    this.updateDisplayedEmployees();
+  }
+
+
+
+  // Update displayed employees based on filters and pagination
+  updateDisplayedEmployees(): void {
+    let filtered = this.employees;
+
+
+    // Apply search term filter
+    if (this.searchTerm) {
+      filtered = filtered.filter(
+        (employee) =>
+          employee.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          employee.email.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          employee.empId.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+
+    // Update filteredEmployees and pagination
+    this.filteredEmployees = filtered;
+    this.employeeCount = this.filteredEmployees.length;
+    this.totalPages = Math.ceil(this.employeeCount / this.pageSize);
+
+    // Ensure currentPage is within valid range
+    if (this.currentPage > this.totalPages) {
+      this.currentPage = 1;
+    }
+
+    // Slice the filteredEmployees array based on the current page and page size
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.displayedItems = this.filteredEmployees.slice(startIndex, endIndex);
+  }
+
+
+  // Handle search input
+  searchEmployees(event: Event): void {
+    const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
+    this.searchTerm = searchTerm;
+    this.currentPage = 1;
+    this.updateDisplayedEmployees();
+  }
+
+  // Get pagination range
+  getPaginationRange(): (number | string)[] {
+    const range: (number | string)[] = [];
+    const total = this.totalPages;
+    const current = this.currentPage;
+    const delta = 2; // Number of pages to show around the current page
+
+    // Always show the first page
+    range.push(1);
+
+    // Add dots if the current page is far from the first page
+    if (current - delta > 2) {
+      range.push('...');
+    }
+
+    // Add pages around the current page
+    for (
+      let i = Math.max(2, current - delta);
+      i <= Math.min(total - 1, current + delta);
+      i++
+    ) {
+      range.push(i);
+    }
+
+    // Add dots if the current page is far from the last page
+    if (current + delta < total - 1) {
+      range.push('...');
+    }
+
+    // Always show the last page
+    if (total > 1) {
+      range.push(total);
+    }
+    return range;
+  }
+
+  // Change page
+  changePage(page: number | string): void {
+    if (typeof page === 'number') {
+      this.currentPage = page;
+      this.updateDisplayedEmployees();
+    }
+  }
+
+  // Go to previous page
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateDisplayedEmployees();
+    }
+  }
+
+  // Go to next page
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updateDisplayedEmployees();
+    }
+  }
+
+
+}
