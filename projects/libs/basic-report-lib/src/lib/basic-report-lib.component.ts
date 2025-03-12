@@ -55,6 +55,7 @@ export class BasicReportLibComponent {
   @Input() enableExcelExport: boolean = true; // Enable or disable Excel export
 
   @Input() filterSession:boolean = false; // columns filters and sorting
+  @Input() filterColumns: string[] = []; // List of column keys to show filters for
 
   // Output event for action button clicks
   @Output() actionClick = new EventEmitter<{action: string, item: any}>();
@@ -71,6 +72,8 @@ export class BasicReportLibComponent {
   
   sortedColumn: string = ''; // Instead of 'null'
   sortOrder: 'asc' | 'desc' = 'asc'; // Current sort order
+
+
 
 
 
@@ -236,12 +239,15 @@ initializeFilters() {
   this.filterOptions = {}; // Reset filters
   if (!this.data || this.data.length === 0) return;
   this.columns.forEach((col) => {
-    const uniqueValues = [...new Set(this.data.map((item) => item[col.key]))]; // Get unique values
-    this.filterOptions[col.key] = uniqueValues.map((val) => ({
-      label: val,
-      value: val,
-      checked: false
-    }));
+    // Only initialize filters for columns that should be filtered
+    if (this.shouldShowFilter(col.key)) {
+      const uniqueValues = [...new Set(this.data.map((item) => item[col.key]))]; // Get unique values
+      this.filterOptions[col.key] = uniqueValues.map((val) => ({
+        label: val,
+        value: val,
+        checked: false
+      }));
+    }
   });
 }
 
@@ -299,4 +305,11 @@ resetFilters() {
 
 //filter session  end here
 
+
+// Check if a column should have a filter
+shouldShowFilter(columnKey: string): boolean {
+  // If filterColumns is empty, show all filters
+  // Otherwise, only show filters for columns in the filterColumns list
+  return this.filterColumns.length === 0 || this.filterColumns.includes(columnKey);
+}
 }

@@ -114,27 +114,34 @@
     </button>
   </div>
     <!-- Dynamic Multi-Select Dropdowns -->
-    <div *ngFor="let column of columns" class="w-36 sm:w-44">
-      <lib-multi-dropdown-lib
-        [data]="filterOptions[column.key]"
-        [singleSelection]="false"
-        [idField]="'value'"
-        [textField]="'label'"
-        [allowSearchFilter]="true"
-        [searchPlaceholderText]="column.key"
-        [enableCheckAll]="true"
-        [selectAllText]="'Select All'"
-        [unSelectAllText]="'Unselect All'"
-        [itemsSelectedShowLimit]="0"
-        [closeDropDownOnSelection]="false"
-        [maxHeight]="400"
-        (selectionChange)="applyFilter(column.key, $event)"
-        [showClearButton]="true" 
-        [hideListByDefault]="false" 
-        [isRequired]="false"
-        class="w-full">
-      </lib-multi-dropdown-lib>
+    <div class="flex flex-wrap gap-4">
+      <div *ngFor="let column of columns">
+        <div [ngClass]="{'w-60': shouldShowFilter(column.key)}">
+          <lib-multi-dropdown-lib
+            *ngIf="shouldShowFilter(column.key)"
+            [data]="filterOptions[column.key]"
+            [singleSelection]="false"
+            [idField]="'value'"
+            [textField]="'label'"
+            [allowSearchFilter]="true"
+            [searchPlaceholderText]="column.key"
+            [enableCheckAll]="true"
+            [selectAllText]="'Select All'"
+            [unSelectAllText]="'Unselect All'"
+            [itemsSelectedShowLimit]="1"
+            [closeDropDownOnSelection]="false"
+            [maxHeight]="400"
+            (selectionChange)="applyFilter(column.key, $event)"
+            [showClearButton]="true" 
+            [hideListByDefault]="false" 
+            [isRequired]="false"
+            class="w-full">
+          </lib-multi-dropdown-lib>
+        </div>
+      </div>
     </div>
+    
+    
   </div>
 
 </div>
