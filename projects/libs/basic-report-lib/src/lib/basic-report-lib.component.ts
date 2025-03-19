@@ -4,29 +4,47 @@ import { saveAs } from 'file-saver';
 import { MultiDropdownLibComponent } from '@libs/multi-dropdown-lib';
 /**
  * A reusable and customizable table report component with filtering, sorting, pagination, 
- * and export functionality.
+ * export functionality, and action buttons.
  * 
- * Features:
+ * ## Features:
  * - Configurable column headers with sorting
  * - Search functionality
  * - Multi-select dropdown filters for columns
  * - Pagination controls with dynamic page numbers
  * - Export data to Excel
  * - Custom action buttons for row-level interactions
+ * - Theme-based styling
  * 
- * Inputs:
+ * ## Inputs:
+ * 
  * - `data`: The list of data objects to be displayed in the table.
  * - `columns`: Defines the table columns with keys, titles, and optional sorting.
  * - `title`: The title of the table/report.
  * - `placeholderText`: Placeholder text for the search input.
- * - `pagination`: Enables/disables pagination.
- * - `itemsPerPage`: Number of items per page.
- * - `isSearchEnabled`: Enables/disables the search bar.
- * - `tableHeight`: Sets the maximum height of the table.
- * - `showActions`: Enables/disables the actions column.
+ * - `pagination`: Enables/disables pagination (default: `true`).
+ * - `itemsPerPage`: Number of items per page (default: `8`).
+ * - `isSearchEnabled`: Enables/disables the search bar (default: `true`).
+ * - `tableHeight`: Sets the maximum height of the table (default: `'400px'`).
+ * - `showActions`: Enables/disables the actions column (default: `false`).
  * - `actionButtons`: Configurable list of action buttons with icons, tooltips, and event identifiers.
- * - `enableExcelExport`: Enables/disables the Excel export functionality.
- * - `filterSession`: Enables/disables column filters and sorting.
+ * - `enableExcelExport`: Enables/disables the Excel export functionality (default: `true`).
+ * - `filterSession`: Enables/disables column filters and sorting (default: `false`).
+ * - `filterColumns`: List of column keys to show filters for.
+ * - `themeColor`: Defines the theme color for the table (default: `'default'`).
+ *    - `'blue'`: Blue-themed table.
+ *    - `'red'`: Red-themed table.
+ *    - `'green'`: Green-themed table.
+ *    - `'yellow'`: Yellow-themed table.
+ *    - `'purple'`: Purple-themed table.
+ *    - `'pink'`: Pink-themed table.
+ *    - `'cyan'`: Cyan (light blue) themed table.
+ *    - `'orange'`: Orange-themed table.
+ *    - `'teal'`: Teal-themed table.
+ *    - `'gray'`: Neutral gray-themed table.
+ *    - `'default'`: Standard gray styling.
+ * 
+ * ## Outputs:
+ * - `actionClick`: Emits an event when an action button is clicked, providing the action type and the row data.
  */
 @Component({
   selector: 'lib-basic-report-lib',
@@ -57,7 +75,8 @@ export class BasicReportLibComponent {
   @Input() filterSession:boolean = false; // columns filters and sorting
   @Input() filterColumns: string[] = []; // List of column keys to show filters for
 
-  // Output event for action button clicks
+  @Input() themeColor: 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'pink' | 'cyan' | 'orange' | 'teal' | 'gray' | 'default' = 'default';
+// Output event for action button clicks
   @Output() actionClick = new EventEmitter<{action: string, item: any}>();
 
   // search string
@@ -90,6 +109,25 @@ export class BasicReportLibComponent {
       this.filterData();
       this.updateDisplayedItems();
     }
+  }
+  
+
+  // theme color
+  getThemeClass(): string {
+    const themeMap: { [key: string]: string } = {
+      blue: 'border-blue-500 bg-blue-100 text-blue-700',
+      red: 'border-red-500 bg-red-100 text-red-700',
+      green: 'border-green-500 bg-green-100 text-green-700',
+      yellow: 'border-yellow-500 bg-yellow-100 text-yellow-700',
+      purple: 'border-purple-500 bg-purple-100 text-purple-700',
+      pink: 'border-pink-500 bg-pink-100 text-pink-700',
+      cyan: 'border-cyan-500 bg-cyan-100 text-cyan-700',
+      orange: 'border-orange-500 bg-orange-100 text-orange-700',
+      teal: 'border-teal-500 bg-teal-100 text-teal-700',
+      gray: 'border-gray-500 bg-gray-100 text-gray-700',
+      default: 'border-gray-500 bg-gray-100 text-gray-700',
+    };
+    return themeMap[this.themeColor] || themeMap['default'];
   }
   
   // Filter data based on the search term

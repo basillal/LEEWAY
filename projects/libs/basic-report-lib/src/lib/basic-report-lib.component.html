@@ -1,6 +1,4 @@
-<div class="w-full h-full bg-gray-100 p-4 overflow-y-auto">
-
-  <!-- Header Section tille-->
+<div class="w-full h-full p-4 overflow-y-auto" [ngClass]="getThemeClass()">  
   <div *ngIf="title !=null" class="w-full border-l-4 border-[#0F00DA] h-auto px-2 sm:px-4">
     <div class="flex mb-1 text-xs sm:text-base lg:text-base items-center space-x-1 md:mb-4 lg:mb-4">
       {{title}}
@@ -178,24 +176,25 @@
         <tbody>
           <tr *ngFor="let item of displayedItems" class="border-b hover:bg-gray-50">
             <td *ngFor="let column of columns"
-              class="px-2 sm:px-4 py-1 sm:py-3 text-[10px] sm:text-xs text-gray-600 truncate">
+              class="px-1 sm:px-2 py-0.5 sm:py-2 text-[10px] sm:text-xs text-gray-600 truncate">
               {{ item[column.key] }}
             </td>
-            
+        
             <!-- Actions Column -->
             <td *ngIf="showActions"
-              class="text-[10px] sm:text-xs text-gray-600 sticky right-0 bg-white group-hover:bg-gray-50 border-l border-gray-200">
+              class="px-1 sm:px-2 py-0.5 sm:py-2 text-[10px] sm:text-xs text-gray-600 truncate">
               <div class="flex items-center space-x-1 sm:space-x-2">
                 <button *ngFor="let btn of actionButtons" [ngClass]="btn.buttonClass"
-                  class="px-2 py-1 sm:px-3 sm:py-2 ml-2 rounded-md transition-colors duration-200 flex items-center justify-center"
+                  class="px-1 py-0.5 sm:px-2 sm:py-1 ml-1 rounded-md transition-colors duration-200 flex items-center justify-center"
                   [title]="btn.tooltip" (click)="onActionClick(btn.action, item)">
                   <span class="flex items-center justify-center" [innerHTML]="btn.icon"></span>
                 </button>
               </div>
             </td>
-
+        
           </tr>
         </tbody>
+        
       </table>
     </ng-container>
 
