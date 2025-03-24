@@ -350,4 +350,11 @@ shouldShowFilter(columnKey: string): boolean {
   // Otherwise, only show filters for columns in the filterColumns list
   return this.filterColumns.length === 0 || this.filterColumns.includes(columnKey);
 }
+
+showAllFilters: boolean = false;  // Controls filter expansion
+visibleFilters: number = 5;  // Number of filters to show before collapse
+
+toggleFilters() {
+  this.showAllFilters = !this.showAllFilters;
+}
 }
