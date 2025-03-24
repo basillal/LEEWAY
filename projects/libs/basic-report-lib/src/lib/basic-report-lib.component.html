@@ -1,19 +1,18 @@
-<div class="w-full h-full bg-gray-100 p-4 overflow-y-auto">
-
-  <!-- Header Section tille-->
+<div class="w-full h-full p-4 overflow-y-auto" [ngClass]="getThemeClass()">  
   <div *ngIf="title !=null" class="w-full border-l-4 border-[#0F00DA] h-auto px-2 sm:px-4">
     <div class="flex mb-1 text-xs sm:text-base lg:text-base items-center space-x-1 md:mb-4 lg:mb-4">
       {{title}}
     </div>
   </div>
 
-  <!-- Header Section with Count and Search -->
-  <div class="p-4 md:mb-4 bg-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-3 border border-gray-50 rounded-2xl">
+ <!-- Header Section with Count and Search -->
+<div class="p-2 md:mb-4 bg-white shadow-xl flex flex-col gap-3 border border-gray-50 rounded-2xl">
+    
 
-
+    <div class="flex flex-col md:flex-row items-center justify-between gap-3">
     <!-- Count Section -->
     <div class="flex items-center gap-3 mb-3 md:mb-0">
-      <div class="text-gray-700 font-medium text-[10px] sm:text-xs md:text-sm lg:text-sm">
+      <div class="text-gray-700 ml-2 font-medium text-[10px] sm:text-xs md:text-sm lg:text-sm">
         {{ placeholderText }}
       </div>
       <div class="bg-green-200 text-green-500 text-[10px] sm:text-xs px-2 py-1 rounded-full border border-green-500">
@@ -103,9 +102,79 @@
     </ng-template>
   </div>
 
+  <!-- filter Section start-->
 
-<!-- Filter Session -->
-<div *ngIf="filterSession" class="p-4 md:mb-8 bg-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-2 border border-gray-50 rounded-2xl">
+  <div *ngIf="filterSection" class="flex flex-wrap items-center gap-4">
+    <div class="flex items-center gap-2 flex-wrap justify-center w-full">
+      <div class="w-36 sm:w-44">
+        <button class="text-[10px] sm:text-xs text-red-500 font-medium pr-2 sm:pr-4 hover:text-red-600 transition" 
+                (click)="resetFilters()">
+          ✖ Clear Filters
+        </button>
+      </div>
+  
+      <!-- Dynamic Multi-Select Dropdowns -->
+      <div class="flex flex-wrap gap-3 flex-grow">
+        <div *ngFor="let column of columns; let i = index">
+          <div [ngClass]="{'w-60': shouldShowFilter(column.key)}" *ngIf="i < visibleFilters || showAllFilters">
+            <lib-multi-dropdown-lib
+              *ngIf="shouldShowFilter(column.key)"
+              [data]="filterOptions[column.key]"
+              [singleSelection]="false"
+              [idField]="'value'"
+              [textField]="'label'"
+              [allowSearchFilter]="true"
+              [searchPlaceholderText]="column.key"
+              [enableCheckAll]="true"
+              [selectAllText]="'Select All'"
+              [unSelectAllText]="'Unselect All'"
+              [itemsSelectedShowLimit]="1"
+              [closeDropDownOnSelection]="false"
+              [maxHeight]="400"
+              (selectionChange)="applyFilter(column.key, $event)"
+              [showClearButton]="true" 
+              [hideListByDefault]="false" 
+              [isRequired]="false"
+              [customClass]="'w-full h-9 text-sm px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'"
+              class="w-full">
+            </lib-multi-dropdown-lib>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Expand/Collapse Button on the Right Side -->
+      <div *ngIf="(filterColumns.length ? filterColumns.length : columns.length) > visibleFilters" class="ml-auto">
+        <button (click)="toggleFilters()" 
+                class="flex items-center text-sm font-medium text-blue-500 hover:text-blue-600 transition">
+          <svg class="w-4 h-4 ml-1 transition-transform" 
+               [ngClass]="{'rotate-180': showAllFilters}" 
+               xmlns="http://www.w3.org/2000/svg" 
+               fill="none" 
+               viewBox="0 0 24 24" 
+               stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+      </div>
+  
+    </div>
+  </div>
+  
+
+  
+  <!-- filter Section end-->
+  
+  
+
+  </div>
+
+
+<!-- Filter Section -->
+
+
+
+<!-- <div *ngIf="filterSection" class="p-4 md:mb-8 bg-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-2 border border-gray-50 rounded-2xl">
   
   <div class="flex items-center gap-2 flex-wrap justify-center">
     <div class="w-36 sm:w-44">
@@ -113,31 +182,38 @@
       ✖ Clear Filters
     </button>
   </div>
-    <!-- Dynamic Multi-Select Dropdowns -->
-    <div *ngFor="let column of columns" class="w-36 sm:w-44">
-      <lib-multi-dropdown-lib
-        [data]="filterOptions[column.key]"
-        [singleSelection]="false"
-        [idField]="'value'"
-        [textField]="'label'"
-        [allowSearchFilter]="true"
-        [searchPlaceholderText]="column.key"
-        [enableCheckAll]="true"
-        [selectAllText]="'Select All'"
-        [unSelectAllText]="'Unselect All'"
-        [itemsSelectedShowLimit]="0"
-        [closeDropDownOnSelection]="false"
-        [maxHeight]="400"
-        (selectionChange)="applyFilter(column.key, $event)"
-        [showClearButton]="true" 
-        [hideListByDefault]="false" 
-        [isRequired]="false"
-        class="w-full">
-      </lib-multi-dropdown-lib>
+    <div class="flex flex-wrap gap-4">
+      <div *ngFor="let column of columns">
+        <div [ngClass]="{'w-60': shouldShowFilter(column.key)}">
+          <lib-multi-dropdown-lib
+            *ngIf="shouldShowFilter(column.key)"
+            [data]="filterOptions[column.key]"
+            [singleSelection]="false"
+            [idField]="'value'"
+            [textField]="'label'"
+            [allowSearchFilter]="true"
+            [searchPlaceholderText]="column.key"
+            [enableCheckAll]="true"
+            [selectAllText]="'Select All'"
+            [unSelectAllText]="'Unselect All'"
+            [itemsSelectedShowLimit]="1"
+            [closeDropDownOnSelection]="false"
+            [maxHeight]="400"
+            (selectionChange)="applyFilter(column.key, $event)"
+            [showClearButton]="true" 
+            [hideListByDefault]="false" 
+            [isRequired]="false"
+            [customClass]="'w-full h-8 text-sm px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'"
+            class="w-full">
+          </lib-multi-dropdown-lib>
+        </div>
+      </div>
     </div>
+    
+    
   </div>
 
-</div>
+</div> -->
 
 
   <!-- Table Section -->
@@ -171,24 +247,25 @@
         <tbody>
           <tr *ngFor="let item of displayedItems" class="border-b hover:bg-gray-50">
             <td *ngFor="let column of columns"
-              class="px-2 sm:px-4 py-1 sm:py-3 text-[10px] sm:text-xs text-gray-600 truncate">
+              class="px-1 sm:px-2 py-0.5 sm:py-2 text-[10px] sm:text-xs text-gray-600 truncate">
               {{ item[column.key] }}
             </td>
-            
+        
             <!-- Actions Column -->
             <td *ngIf="showActions"
-              class="text-[10px] sm:text-xs text-gray-600 sticky right-0 bg-white group-hover:bg-gray-50 border-l border-gray-200">
+              class="px-1 sm:px-2 py-0.5 sm:py-2 text-[10px] sm:text-xs text-gray-600 truncate">
               <div class="flex items-center space-x-1 sm:space-x-2">
                 <button *ngFor="let btn of actionButtons" [ngClass]="btn.buttonClass"
-                  class="px-2 py-1 sm:px-3 sm:py-2 ml-2 rounded-md transition-colors duration-200 flex items-center justify-center"
+                  class="px-1 py-0.5 sm:px-2 sm:py-1 ml-1 rounded-md transition-colors duration-200 flex items-center justify-center"
                   [title]="btn.tooltip" (click)="onActionClick(btn.action, item)">
                   <span class="flex items-center justify-center" [innerHTML]="btn.icon"></span>
                 </button>
               </div>
             </td>
-
+        
           </tr>
         </tbody>
+        
       </table>
     </ng-container>
 

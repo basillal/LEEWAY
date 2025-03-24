@@ -8,9 +8,11 @@
   [tableHeight]="'400px'"
   [enableExcelExport]="true"
   [pagination]="true"
+  [filterColumns]="['department', 'location','id','salary','name','joiningDate','experience']"
   [itemsPerPage]="10"
-  [filterSession]="true"
+  [filterSection]="true"
   [isSearchEnabled]="true"
+  [themeColor]="'gray'"
   (actionClick)="handleAction($event)"
 ></lib-basic-report-lib>
 
