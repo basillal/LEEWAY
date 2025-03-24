@@ -28,7 +28,7 @@ import { MultiDropdownLibComponent } from '@libs/multi-dropdown-lib';
  * - `showActions`: Enables/disables the actions column (default: `false`).
  * - `actionButtons`: Configurable list of action buttons with icons, tooltips, and event identifiers.
  * - `enableExcelExport`: Enables/disables the Excel export functionality (default: `true`).
- * - `filterSession`: Enables/disables column filters and sorting (default: `false`).
+ * - `filterSection`: Enables/disables column filters and sorting (default: `false`).
  * - `filterColumns`: List of column keys to show filters for.
  * - `themeColor`: Defines the theme color for the table (default: `'default'`).
  *    - `'blue'`: Blue-themed table.
@@ -72,7 +72,7 @@ export class BasicReportLibComponent {
   }[] = [];  
   @Input() enableExcelExport: boolean = true; // Enable or disable Excel export
 
-  @Input() filterSession:boolean = false; // columns filters and sorting
+  @Input() filterSection:boolean = false; // columns filters and sorting
   @Input() filterColumns: string[] = []; // List of column keys to show filters for
 
   @Input() themeColor: 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'pink' | 'cyan' | 'orange' | 'teal' | 'gray' | 'default' = 'default';
@@ -264,7 +264,7 @@ export class BasicReportLibComponent {
 
 
 
-// filter session  starts here
+// filter Section  starts here
 
 filterOptions: { [key: string]: any[] } = {}; // Stores unique values for filters
 selectedFilters: { [key: string]: any } = {}; // Stores selected filter values
@@ -341,7 +341,7 @@ resetFilters() {
 
 
 
-//filter session  end here
+//filter Section  end here
 
 
 // Check if a column should have a filter
