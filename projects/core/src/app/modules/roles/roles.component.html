@@ -1,0 +1,32 @@
+<lib-create-view-lib title="Permission">
+
+    <!-- Grid View Content -->
+    <div gridViewContent>
+        <lib-basic-report-lib
+        [data]="tableData"
+        [columns]="columns"
+        [title]="'Employee Report'"
+        [placeholderText]="'Employees'"
+        [showActions]="true"
+        [actionButtons]="actionButtons"
+        [tableHeight]="'400px'"
+        [enableExcelExport]="true"
+        [pagination]="true"
+        [filterColumns]="['department', 'location','id','salary','name','joiningDate','experience']"
+        [itemsPerPage]="10"
+        [filterSection]="true"
+        [isSearchEnabled]="true"
+        [themeColor]="'gray'"
+        (actionClick)="handleAction($event)"
+      ></lib-basic-report-lib>    </div>
+
+    <!-- Create View Content -->
+    <div createViewContent>
+        <lib-dynamic-form
+        [inputConfig]="inputFields"
+        (submitForm)="handleSubmit($event)">
+      </lib-dynamic-form>
+
+    </div>
+
+</lib-create-view-lib>

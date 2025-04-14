@@ -1,0 +1,43 @@
+<div class="min-h-screen py-12 px-6 bg-white">
+  <!-- Title -->
+<h1 class="text-xl font-semibold text-blue-800 border-l-4 border-blue-600 pl-3 ml-1 mb-4 dark:text-blue-500">
+  {{ title }}
+</h1>
+
+  <!-- Grid View Section -->
+  <div class="w-full px-10 mx-auto" *ngIf="!isCreateView">
+    <div class="flex justify-between items-center mb-8">
+      <div></div> <!-- Can be used for a search/filter bar later -->
+      <button
+        id="add"
+        (click)="openCreateView()"
+        class="flex items-center justify-center bg-teal-600 text-white w-12 h-12 rounded-full shadow-lg hover:bg-teal-700 hover:scale-110 transition-transform duration-300 ease-in-out"
+      >
+        <i class="fa-solid fa-circle-plus text-2xl"></i>
+      </button>
+    </div>
+
+    <!-- Grid Content Slot -->
+    <div class="bg-white p-8 border-1 rounded-2xl shadow-lg">
+      <ng-content select="[gridViewContent]"></ng-content>
+    </div>
+  </div>
+
+  <!-- Create View Section -->
+  <div class="w-full  px-4 mx-auto mt-12" *ngIf="isCreateView">
+    <div class="bg-white p-12 border border-gray-300 shadow-lg">
+      <div class="flex  justify-between mb-8">
+        <span class="text-lg font-semibold ">Heading</span>
+        <button (click)="closeCreateView()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>          
+        </button>
+      </div>
+      <!-- Create View Content -->
+      <ng-content select="[createViewContent]"></ng-content>
+ 
+    </div>
+  </div>
+  
+</div>

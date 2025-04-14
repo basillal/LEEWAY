@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MultiDropdownLibModule } from '@libs/multi-dropdown-lib';
 import { FormsModule } from '@angular/forms';
 import { BasicReportLibModule } from '@libs/basic-report-lib';
+import { CreateViewLibModule } from '@libs/create-view-lib';
 const routes: Routes = [
   {
     path: '',
@@ -23,7 +24,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MultiDropdownLibModule,
     FormsModule,
-    BasicReportLibModule
+    BasicReportLibModule,
+    CreateViewLibModule
 ]
 })
 export class UsermanagementModule { }
