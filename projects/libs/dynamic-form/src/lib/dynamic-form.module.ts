@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { DynamicFormComponent } from './dynamic-form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 
@@ -12,7 +12,8 @@ import { CommonModule } from '@angular/common';
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     DynamicFormComponent

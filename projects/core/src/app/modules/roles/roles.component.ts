@@ -120,72 +120,97 @@ export class RolesComponent {
   // ];
 
 
+  // inputFields: InputConfig[] = [
+  //   {
+  //     type: 'text',
+  //     label: 'Text Box 1',
+  //     placeholder: 'Enter Text 1',
+  //     key: 'textBox1',
+  //     className: 'w-full p-2',
+  //     wrapperClassName: 'col-span-1 sm:col-span-2'
+  //   },
+  //   {
+  //     type: 'text',
+  //     label: 'Text Box 2',
+  //     placeholder: 'Enter Text 2',
+  //     key: 'textBox2',
+  //     className: 'w-full p-2',
+  //     wrapperClassName: 'col-span-1 sm:col-span-3'
+  //   },
+  //   {
+  //     type: 'password',
+  //     label: 'Password',
+  //     placeholder: 'Enter your password',
+  //     key: 'textBox3',
+  //     className: 'w-full p-2',
+  //     wrapperClassName: 'col-span-1 sm:col-span-2'
+  //   },
+  //   {
+  //     type: 'checkbox',
+  //     label: 'Accept Terms',
+  //     key: 'checkbox1',
+  //     wrapperClassName: 'col-span-1 sm:col-span-4'
+  //   },
+  //   {
+  //     type: 'select',
+  //     label: 'Select Box',
+  //     key: 'selectBox',
+  //     options: [
+  //       { label: 'Option 1', value: '1' },
+  //       { label: 'Option 2', value: '2' }
+  //     ],
+  //     className: 'w-full p-2',
+  //     wrapperClassName: 'col-span-1 sm:col-span-2'
+  //   },
+  //   {
+  //     type: 'text',
+  //     label: 'Text Box 6',
+  //     placeholder: 'Enter Text 6',
+  //     key: 'textBox6',
+  //     className: 'w-full p-2',
+  //     wrapperClassName: 'col-span-1 sm:col-span-2'
+  //   },
+  //   {
+  //     type: 'text',
+  //     label: 'Text Box 7',
+  //     placeholder: 'Enter Text 7',
+  //     key: 'textBox7',
+  //     className: 'w-full p-2',
+  //     wrapperClassName: 'col-span-1 sm:col-span-2'
+  //   },
+  //   {
+  //     type: 'text',
+  //     label: 'Text Box 8',
+  //     placeholder: 'Enter Text 8',
+  //     key: 'textBox8',
+  //     className: 'w-full p-2',
+  //     wrapperClassName: 'col-span-1 sm:col-span-2'
+  //   }
+  // ];
+  
+
   inputFields: InputConfig[] = [
-    {
-      type: 'text',
-      label: 'Text Box 1',
-      placeholder: 'Enter Text 1',
-      key: 'textBox1',
-      className: 'w-full p-2',
-      wrapperClassName: 'col-span-1 sm:col-span-2'
-    },
-    {
-      type: 'text',
-      label: 'Text Box 2',
-      placeholder: 'Enter Text 2',
-      key: 'textBox2',
-      className: 'w-full p-2',
-      wrapperClassName: 'col-span-1 sm:col-span-3'
-    },
-    {
-      type: 'password',
-      label: 'Password',
-      placeholder: 'Enter your password',
-      key: 'textBox3',
-      className: 'w-full p-2',
-      wrapperClassName: 'col-span-1 sm:col-span-2'
-    },
-    {
-      type: 'checkbox',
-      label: 'Accept Terms',
-      key: 'checkbox1',
-      wrapperClassName: 'col-span-1 sm:col-span-4'
-    },
+    { type: 'text', label: 'Name', key: 'name', placeholder: 'Enter name', required: true ,disabled:true,maxLength:4,minLength:2},
+    { type: 'email', label: 'Email', key: 'email', placeholder: 'Enter email', required: true },
+    { type: 'password', label: 'Password', key: 'password', required: true },
     {
       type: 'select',
-      label: 'Select Box',
-      key: 'selectBox',
+      label: 'Country',
+      key: 'country',
       options: [
-        { label: 'Option 1', value: '1' },
-        { label: 'Option 2', value: '2' }
+        { label: 'India', value: 'in' },
+        { label: 'USA', value: 'us' }
       ],
-      className: 'w-full p-2',
-      wrapperClassName: 'col-span-1 sm:col-span-2'
+      required: true
     },
     {
       type: 'text',
-      label: 'Text Box 6',
-      placeholder: 'Enter Text 6',
-      key: 'textBox6',
-      className: 'w-full p-2',
-      wrapperClassName: 'col-span-1 sm:col-span-2'
+      label: 'State',
+      key: 'state',
+      showIf: (data) => data.country === 'in',
+      required: true
     },
-    {
-      type: 'text',
-      label: 'Text Box 7',
-      placeholder: 'Enter Text 7',
-      key: 'textBox7',
-      className: 'w-full p-2',
-      wrapperClassName: 'col-span-1 sm:col-span-2'
-    },
-    {
-      type: 'text',
-      label: 'Text Box 8',
-      placeholder: 'Enter Text 8',
-      key: 'textBox8',
-      className: 'w-full p-2',
-      wrapperClassName: 'col-span-1 sm:col-span-2'
-    }
+    { type: 'checkbox', label: 'I agree to terms', key: 'terms', required: true }
   ];
   
 
