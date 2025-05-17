@@ -12,14 +12,14 @@
           [type]="input.type"
           [formControlName]="input.key"
           [placeholder]="input.placeholder"
-          [ngClass]="input.className || 'w-full border border-gray-300 text-xs p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500'"
+          [ngClass]="input.className || 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'"
         />
 
         <!-- Select Dropdown -->
         <select
           *ngIf="input.type === 'select'"
           [formControlName]="input.key"
-          [ngClass]="input.className || 'w-full border border-gray-300 text-xs p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500'"
+          [ngClass]="input.className || 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'"
         >
           <option disabled value="">Select {{ input.label }}</option>
           <option *ngFor="let option of input.options" [value]="option.value">{{ option.label }}</option>
@@ -67,11 +67,15 @@
     >
       Reset
     </button>
-    <button (click)="onSubmit()"
+    <button (click)="onSubmit()"  *ngIf="!isEditMode"
       type="submit"
       class="bg-blue-800 text-white text-xs font-medium px-6 py-2 rounded hover:bg-blue-900 transition"
     >
       Submit
     </button>
+    <button type="submit"  (click)="onSubmit()" 
+    class="bg-green-800 text-white text-xs font-medium px-6 py-2 rounded hover:bg-green-900 transition"    *ngIf="isEditMode">
+    Update
+  </button>
   </div>
 </form>

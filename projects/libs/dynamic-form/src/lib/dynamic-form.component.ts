@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
 export interface InputConfig {
@@ -28,8 +28,10 @@ export interface InputConfig {
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.css']
 })
-export class DynamicFormComponent implements OnInit {
+export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() inputConfig: InputConfig[] = [];
+  @Input() formData: any; // raw values from the item
+  @Input() isEditMode: boolean = false;
   @Output() submitForm = new EventEmitter<any>();
   @Output() formStatus = new EventEmitter<boolean>();
 
@@ -39,44 +41,43 @@ export class DynamicFormComponent implements OnInit {
 
   ngOnInit(): void {
     const controls: { [key: string]: any } = {};
-
-    // Dynamically create form controls based on inputConfig
+  
     this.inputConfig.forEach(field => {
       const validators: ValidatorFn[] = [];
-
-      if (field.required) {
-        validators.push(Validators.required);
-      }
-
-      if (field.minLength) {
-        validators.push(Validators.minLength(field.minLength));
-      }
-
-      if (field.maxLength) {
-        validators.push(Validators.maxLength(field.maxLength));
-      }
-
-      if (field.pattern) {
-        validators.push(Validators.pattern(field.pattern));
-      }
-
-      if (field.min !== undefined) {
-        validators.push(Validators.min(field.min));
-      }
-
-      if (field.max !== undefined) {
-        validators.push(Validators.max(field.max));
-      }
-
-      controls[field.key] = [field.defaultValue || '', validators];
+  
+      if (field.required) validators.push(Validators.required);
+      if (field.minLength) validators.push(Validators.minLength(field.minLength));
+      if (field.maxLength) validators.push(Validators.maxLength(field.maxLength));
+      if (field.pattern) validators.push(Validators.pattern(field.pattern));
+      if (field.min !== undefined) validators.push(Validators.min(field.min));
+      if (field.max !== undefined) validators.push(Validators.max(field.max));
+  
+      controls[field.key] = [{ value: field.defaultValue || '', disabled: field.disabled || false }, validators];
     });
-
+  
     this.form = this.fb.group(controls);
-
-    // Optional: react to value changes for dynamic field visibility
+  
+    // Emit form validity status initially
+    this.formStatus.emit(this.form.valid);
+  
+    // Patch formData if available
+    if (this.formData) {
+      this.form.patchValue(this.formData);
+    }
+  
+    // React to value changes
     this.form.valueChanges.subscribe(() => {
       this.formStatus.emit(this.form.valid);
     });
+  }
+  
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['formData'] && this.form && this.formData) {
+      console.log("received data :",this.formData);
+      
+      this.form.patchValue(this.formData);
+    }
   }
 
   onSubmit() {

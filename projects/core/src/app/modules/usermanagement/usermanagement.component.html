@@ -7,14 +7,13 @@
   [actionButtons]="actionButtons"
   [tableHeight]="'400px'"
   [enableExcelExport]="true"
-  [pagination]="true"
-  [filterColumns]="['department', 'location','id','salary','name','joiningDate','experience']"
-  [itemsPerPage]="10"
+  [pagination]="false"
+  [itemsPerPage]="5"
   [filterSection]="true"
   [isSearchEnabled]="true"
-  [themeColor]="'gray'"
+  [themeColor]="'red'"
   (actionClick)="handleAction($event)"
-></lib-basic-report-lib>
+/>
 
 
 

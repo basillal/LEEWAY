@@ -457,8 +457,18 @@
 
 <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
 
-<div class="p-4 sm:ml-64">
-  <div class="p-4 mt-6">
-    <router-outlet></router-outlet> <!-- Placeholder for routed content -->
+<!-- <div class="fixed inset-0 flex sm:ml-64">
+  <div class="flex flex-col w-full p-4">
+    <div class="flex-1 mt-6 overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div> -->
+
+<div class="fixed inset-0 sm:ml-64 overflow-hidden">
+  <div class="p-4 h-full">
+    <div class="mt-6 h-full overflow-hidden">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

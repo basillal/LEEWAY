@@ -1,32 +1,22 @@
-<lib-create-view-lib title="Permission">
+<lib-create-view-lib title="Roles" [isCreateView]="formView"   (closeView)="resetForm()"
+>
 
-    <!-- Grid View Content -->
-    <div gridViewContent>
-        <lib-basic-report-lib
-        [data]="tableData"
-        [columns]="columns"
-        [title]="'Employee Report'"
-        [placeholderText]="'Employees'"
-        [showActions]="true"
-        [actionButtons]="actionButtons"
-        [tableHeight]="'400px'"
-        [enableExcelExport]="true"
-        [pagination]="true"
-        [filterColumns]="['department', 'location','id','salary','name','joiningDate','experience']"
-        [itemsPerPage]="10"
-        [filterSection]="true"
-        [isSearchEnabled]="true"
-        [themeColor]="'gray'"
-        (actionClick)="handleAction($event)"
-      ></lib-basic-report-lib>    </div>
+  <!-- Grid View Content -->
+  <div gridViewContent>
+    <lib-basic-report-lib [data]="tableData" [columns]="columns" [title]="'Role Report'"
+      [placeholderText]="'Count'" [showActions]="true" [actionButtons]="actionButtons" [tableHeight]="'400px'"
+      [enableExcelExport]="true" [pagination]="true"
+      [filterColumns]="['department', 'location','id','salary','name','joiningDate','experience']" [itemsPerPage]="10"
+      [filterSection]="true" [isSearchEnabled]="true" [themeColor]="'gray'"
+      (actionClick)="handleAction($event)"></lib-basic-report-lib>
+  </div>
 
-    <!-- Create View Content -->
-    <div createViewContent>
-        <lib-dynamic-form
-        [inputConfig]="inputFields"
-        (submitForm)="handleSubmit($event)">
-      </lib-dynamic-form>
+  <!-- Create View Content -->
+  <div createViewContent>
+    <lib-dynamic-form [inputConfig]="inputFields" [formData]="selectedItem" [isEditMode]="isEditMode" (submitForm)="handleSubmit($event)"
+    >
+    </lib-dynamic-form>
 
-    </div>
+  </div>
 
-</lib-create-view-lib>
+</lib-create-view-lib>3

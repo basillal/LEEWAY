@@ -7,29 +7,11 @@ import { InputConfig } from '@libs/dynamic-form';
   styleUrls: ['./roles.component.css']
 })
 export class RolesComponent {
-  isCreateView = false;
-  isEdit = false;
 
-  openCreateView() {
-    this.isCreateView = true;
-    this.isEdit = false;
-  }
-
-  closeCreateView() {
-    this.isCreateView = false;
-    this.isEdit = false;
-  }
-
-  handleCreate(data: any) {
-    console.log('Create:', data);
-    this.closeCreateView();
-  }
-
-  handleUpdate(data: any) {
-    console.log('Update:', data);
-    this.closeCreateView();
-  }
-
+  selectedItem: any = null; // this will hold the item for editing
+  formView: boolean = false;
+  isEditMode:boolean = false
+  
 
   
   tableData =  [
@@ -81,6 +63,10 @@ export class RolesComponent {
     switch (action) {
       case 'edit':
         console.log('Edit item:', item);
+        this.selectedItem = item;
+        this.formView = true;   
+        this.isEditMode= true     
+
         // Add your edit logic here
         break;
       case 'delete':
@@ -189,33 +175,64 @@ export class RolesComponent {
   // ];
   
 
+  // inputFields: InputConfig[] = [
+  //   { type: 'text', label: 'Name', key: 'name', placeholder: 'Enter name', required: true ,disabled:true,maxLength:4,minLength:2},
+  //   { type: 'email', label: 'Email', key: 'email', placeholder: 'Enter email', required: true },
+  //   { type: 'password', label: 'Password', key: 'password', required: true },
+  //   {
+  //     type: 'select',
+  //     label: 'Country',
+  //     key: 'country',
+  //     options: [
+  //       { label: 'India', value: 'in' },
+  //       { label: 'USA', value: 'us' }
+  //     ],
+  //     required: true
+  //   },
+  //   {
+  //     type: 'text',
+  //     label: 'State',
+  //     key: 'state',
+  //     showIf: (data) => data.country === 'in',
+  //     required: true
+  //   },
+  //   { type: 'checkbox', label: 'I agree to terms', key: 'terms', required: true }
+  // ];
+  
+
   inputFields: InputConfig[] = [
-    { type: 'text', label: 'Name', key: 'name', placeholder: 'Enter name', required: true ,disabled:true,maxLength:4,minLength:2},
+    { type: 'text', label: 'Name', key: 'name', placeholder: 'Enter name', required: true, maxLength: 50 },
     { type: 'email', label: 'Email', key: 'email', placeholder: 'Enter email', required: true },
-    { type: 'password', label: 'Password', key: 'password', required: true },
+    { type: 'text', label: 'Department', key: 'department', placeholder: 'Enter department', required: true },
+    { type: 'number', label: 'Salary', key: 'salary', placeholder: 'Enter salary', required: true, min: 0 },
+    { type: 'text', label: 'Joining Date', key: 'joiningDate', placeholder: 'Enter joining date (e.g. 2023-01-01)', required: true },
+    { type: 'number', label: 'Experience (Years)', key: 'experience', placeholder: 'Enter years of experience', required: true, min: 0 },
+    { type: 'text', label: 'Location', key: 'location', placeholder: 'Enter location', required: true },
     {
       type: 'select',
-      label: 'Country',
-      key: 'country',
+      label: 'Status',
+      key: 'status',
       options: [
-        { label: 'India', value: 'in' },
-        { label: 'USA', value: 'us' }
+        { label: 'Active', value: 'active' },
+        { label: 'Inactive', value: 'inactive' },
+        { label: 'On Leave', value: 'leave' }
       ],
       required: true
     },
-    {
-      type: 'text',
-      label: 'State',
-      key: 'state',
-      showIf: (data) => data.country === 'in',
-      required: true
-    },
-    { type: 'checkbox', label: 'I agree to terms', key: 'terms', required: true }
-  ];
-  
+    { type: 'text', label: 'john', key: 'john', placeholder: 'Enter john', required: true },
 
-  handleSubmit(formData: { [key: string]: any }) {
-    console.log('Submitted Form Data:', formData);
+  ];
+
+  
+  handleSubmit(data: any) {
+    console.log('Submitted data:', data);
+    this.resetForm(); // hide form and reset
+  }
+  
+  resetForm() {
+    this.formView = false;
+    this.isEditMode = false;
+    this.selectedItem = null;
   }
 
 }
