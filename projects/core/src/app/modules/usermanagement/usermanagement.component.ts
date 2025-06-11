@@ -16,7 +16,6 @@ type LayoutStyle =
   styleUrls: ['./usermanagement.component.css'],
 })
 export class UsermanagementComponent {
-  // All available layout styles
   layoutStyles: LayoutStyle[] = [
     'grid',
     'small',
@@ -28,28 +27,37 @@ export class UsermanagementComponent {
     'wizard'
   ];
 
-  // Track active layouts (can support multi-layout view)
-  activeLayouts: Set<LayoutStyle> = new Set(['grid']); // Default active
+  activeLayouts: Set<LayoutStyle> = new Set(['grid']);
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  // Expose available layouts to template
   get availableLayouts(): LayoutStyle[] {
     return this.layoutStyles;
   }
 
-  // Toggle layout visibility
   toggleLayout(style: LayoutStyle): void {
     if (this.activeLayouts.has(style)) {
       this.activeLayouts.delete(style);
     } else {
       this.activeLayouts.add(style);
     }
-    this.cdr.detectChanges(); // Ensure UI updates
+    this.cdr.detectChanges();
   }
 
-  // Check if a layout is currently active
   isActive(style: LayoutStyle): boolean {
     return this.activeLayouts.has(style);
   }
+
+  // ✨ Customization Options
+  customSettings = {
+    borderRadius: '1rem',
+    cardBackgroundColor: '#ffffff',
+    themeColor: '#f8f9fa',
+    themeTextColor: '#111827',
+    themeAccentColor: '#14b8a6',
+    showShadow: true
+  };
+  
+  defaultShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+  
 }

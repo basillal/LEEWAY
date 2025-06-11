@@ -1,50 +1,62 @@
-import { Component, Input, OnInit } from '@angular/core';
+// bl-frame.component.ts
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'bl-frame',
   templateUrl: './bl-frame.component.html',
-  styleUrls: ['./bl-frame.component.css'],
+  styleUrls: ['./bl-frame.component.css']
 })
-export class BlFrameComponent implements OnInit {
-  @Input() layoutStyle: 'grid' | 'small' | 'create' | 'modal' | 'tabbed' | 'sidebar' | 'card-stack' | 'wizard' = 'grid';
-  @Input() themeColor: string = '#f3f4f6';
-  @Input() themeTextColor: string = '#1f2937';
-  @Input() themeAccentColor: string = '#0ea5e9';
-  @Input() containerHeight: string = 'calc(100vh - 100px)';
-  @Input() title: string = 'Default Title';
-  @Input() isCreateView: boolean = false;
-  @Input() tabs: string[] = []; // For tabbed layout
-  @Input() wizardSteps: string[] = []; // For wizard layout
-  activeTab: string = '';
-  currentStepIndex: number = 0;
+export class BlFrameComponent {
+  @Input() layoutStyle: string = 'grid';
+  @Input() title: string = '';
 
-  ngOnInit() {
-    if (this.layoutStyle === 'tabbed' && this.tabs.length > 0) {
-      this.activeTab = this.tabs[0];
-    }
-  }
+  // Theme customization
+  @Input() themeColor: string = '#f8f9fa';
+  @Input() themeTextColor: string = '#111827';
+  @Input() themeAccentColor: string = '#14b8a6';
 
-  openCreateView() {
-    this.isCreateView = true;
-  }
+  // Size and layout customization
+  @Input() containerHeight: string = 'calc(100vh - 80px)';
+  @Input() containerWidth: string = '100%';
+  @Input() minHeight: string = '100vh';
+  @Input() maxHeight: string = '100vh';
 
-  closeCreateView() {
-    this.isCreateView = false;
-  }
+  // Card and section customization
+  @Input() cardBackgroundColor: string = '#ffffff';
+  @Input() borderRadius: string = '1rem';
+  @Input() gridShadow: string = '0 4px 6px rgba(0, 0, 0, 0.1)';
 
+  // Tabbed layout
+  @Input() tabs: string[] = [];
+  @Input() activeTab: string = '';
   setActiveTab(tab: string) {
     this.activeTab = tab;
   }
 
-  nextStep() {
-    if (this.currentStepIndex < this.wizardSteps.length - 1) {
-      this.currentStepIndex++;
-    }
+  // Wizard layout
+  @Input() wizardSteps: string[] = [];
+  @Input() currentStepIndex: number = 0;
+
+  // Carousel layout (future expansion)
+  @Input() slides: any[] = [];
+  @Input() activeSlide: number = 0;
+
+  // Hero layout
+  @Input() heroImageUrl: string = '';
+
+  // Accordion layout (future expansion)
+  @Input() accordionSections: { title: string, content: string, open: boolean }[] = [];
+
+  // Actions
+  openCreateView() {
+    this.layoutStyle = 'create';
   }
 
-  prevStep() {
-    if (this.currentStepIndex > 0) {
-      this.currentStepIndex--;
-    }
+  closeCreateView() {
+    this.layoutStyle = 'grid';
   }
 }
+
+
+/* You can now use all the layout templates dynamically through `layoutStyle`.
+   Each layout uses `@Input` properties for full customization from the parent. */

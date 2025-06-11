@@ -1,98 +1,126 @@
 <!-- Top Button Bar -->
 <div class="flex flex-wrap gap-2 p-4 bg-gray-100 rounded-lg shadow mb-6">
-  <button
-    *ngFor="let style of availableLayouts"
-    (click)="toggleLayout(style)"
+  <button *ngFor="let style of availableLayouts" (click)="toggleLayout(style)" 
     [ngClass]="{
       'bg-emerald-600 text-white': isActive(style),
       'bg-white text-gray-700': !isActive(style)
-    }"
-    class="px-4 py-2 rounded-lg border border-emerald-600 transition-all hover:scale-105"
-  >
+    }" 
+    class="px-4 py-2 rounded-lg border border-emerald-600 transition-all hover:scale-105">
     {{ style | titlecase }}
   </button>
 </div>
 
-<!-- Dynamically Render Multiple Layouts -->
+<!-- Layout Customization Options -->
+<div class="flex flex-wrap items-center gap-4 p-4 bg-gray-50 border rounded shadow mb-8">
+  <label class="flex items-center gap-2">
+    <input type="checkbox" [(ngModel)]="customSettings.showShadow" />
+    Show Shadow
+  </label>
+  <label class="flex items-center gap-2">
+    <span>Border Radius</span>
+    <select [(ngModel)]="customSettings.borderRadius" class="border rounded px-2 py-1">
+      <option value="0rem">None</option>
+      <option value="0.5rem">Small</option>
+      <option value="1rem">Medium</option>
+      <option value="2rem">Large</option>
+    </select>
+  </label>
+  <label class="flex items-center gap-2">
+    <span>Card Background</span>
+    <input type="color" [(ngModel)]="customSettings.cardBackgroundColor" />
+  </label>
+</div>
+
+<!-- Dynamically Render Layouts -->
 <bl-frame
   *ngIf="isActive('grid')"
   layoutStyle="grid"
   title="Grid Layout"
+
+  [borderRadius]="customSettings.borderRadius"
+  [cardBackgroundColor]="customSettings.cardBackgroundColor"
+  [gridShadow]="customSettings.showShadow ? defaultShadow : 'none'"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'200px'"
+  [themeColor]="customSettings.themeColor"
+  [themeTextColor]="customSettings.themeTextColor"
+  [themeAccentColor]="customSettings.themeAccentColor"
 >
   <div gridViewContent>
-    <div class="p-4 bg-gray-100 rounded">This is Grid layout content</div>
+    <div class="p-4 bg-gray-100 rounded shadow-sm">
+      <p class="text-sm text-gray-700">This is Grid layout content</p>
+    </div>
   </div>
 </bl-frame>
 
-<bl-frame
-  *ngIf="isActive('small')"
-  layoutStyle="small"
-  title="Small Layout"
->
+
+<bl-frame *ngIf="isActive('small')" layoutStyle="small" title="Small Layout"
+  [borderRadius]="customSettings.borderRadius"
+  [cardBackgroundColor]="customSettings.cardBackgroundColor"
+  [gridShadow]="customSettings.showShadow ? defaultShadow : 'none'">
   <div gridViewContent>
     <div class="p-4 bg-gray-100 rounded">This is Small layout content</div>
   </div>
 </bl-frame>
 
-<bl-frame
-  *ngIf="isActive('create')"
-  layoutStyle="create"
-  title="Create Layout"
->
+<bl-frame *ngIf="isActive('create')" layoutStyle="create" title="Create Layout"
+  [borderRadius]="customSettings.borderRadius"
+  [cardBackgroundColor]="customSettings.cardBackgroundColor"
+  [gridShadow]="customSettings.showShadow ? defaultShadow : 'none'">
   <div createViewContent>
     <p>This is Create layout content</p>
   </div>
 </bl-frame>
 
-<bl-frame
-  *ngIf="isActive('modal')"
-  layoutStyle="modal"
-  title="Modal Layout"
->
+<bl-frame *ngIf="isActive('modal')" layoutStyle="modal" title="Modal Layout"
+  [borderRadius]="customSettings.borderRadius"
+  [cardBackgroundColor]="customSettings.cardBackgroundColor"
+  [gridShadow]="customSettings.showShadow ? defaultShadow : 'none'">
   <div createViewContent>
     <p>This is Modal layout content</p>
   </div>
 </bl-frame>
 
-<bl-frame
-  *ngIf="isActive('tabbed')"
-  layoutStyle="tabbed"
-  title="Tabbed Layout"
+<bl-frame *ngIf="isActive('tabbed')" layoutStyle="tabbed" title="Tabbed Layout"
   [tabs]="['Tab 1', 'Tab 2']"
->
+  [borderRadius]="customSettings.borderRadius"
+  [cardBackgroundColor]="customSettings.cardBackgroundColor"
+  [gridShadow]="customSettings.showShadow ? defaultShadow : 'none'">
   <div tabViewContent>
     <p>Tabbed Layout Content</p>
   </div>
 </bl-frame>
 
-<bl-frame
-  *ngIf="isActive('sidebar')"
-  layoutStyle="sidebar"
-  title="Sidebar Layout"
+<bl-frame *ngIf="isActive('sidebar')" layoutStyle="sidebar" title="Sidebar Layout"
   [tabs]="['Dashboard', 'Profile']"
->
+  [borderRadius]="customSettings.borderRadius"
+  [cardBackgroundColor]="customSettings.cardBackgroundColor"
+  [gridShadow]="customSettings.showShadow ? defaultShadow : 'none'">
   <div tabViewContent>
     <p>Sidebar Layout Content</p>
   </div>
 </bl-frame>
 
-<bl-frame
-  *ngIf="isActive('card-stack')"
-  layoutStyle="card-stack"
-  title="Card Stack Layout"
->
+<bl-frame *ngIf="isActive('card-stack')" layoutStyle="card-stack" title="Card Stack Layout"
+  [borderRadius]="customSettings.borderRadius"
+  [cardBackgroundColor]="customSettings.cardBackgroundColor"
+  [gridShadow]="customSettings.showShadow ? defaultShadow : 'none'">
   <div gridViewContent>
     <div class="p-4 bg-gray-100 rounded">This is Card Stack layout</div>
   </div>
 </bl-frame>
 
-<bl-frame
-  *ngIf="isActive('wizard')"
-  layoutStyle="wizard"
-  title="Step Wizard Layout"
-  [wizardSteps]="['Step One', 'Step Two', 'Final Step']"
->
+<bl-frame *ngIf="isActive('wizard')" layoutStyle="wizard" title="Step Wizard Layout"
+  [wizardSteps]="['Step One', 'Step Two', 'Final Step', 'Extra Step']"
+  [borderRadius]="customSettings.borderRadius"
+  [containerWidth]="'900px'"
+  [containerHeight]="'200px'"
+  [minHeight]="'100px'"
+  [cardBackgroundColor]="customSettings.cardBackgroundColor"
+  [gridShadow]="customSettings.showShadow ? defaultShadow : 'none'">
   <div wizardStepContent>
     <p>This is Step Wizard content</p>
   </div>
 </bl-frame>
+
