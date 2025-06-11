@@ -1,0 +1,18 @@
+{
+  "name": "bl-frame",
+  "version": "0.0.1",
+  "module": "fesm2022/bl-frame.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "esm2022": "./esm2022/bl-frame.mjs",
+      "esm": "./esm2022/bl-frame.mjs",
+      "default": "./fesm2022/bl-frame.mjs"
+    }
+  },
+  "peerDependencies": {
+    "@angular/common": "^16.2.0",
+    "@angular/core": "^16.2.0"
+  }
+}

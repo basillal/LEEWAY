@@ -8,6 +8,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { AgGridLibModule } from '@libs/ag-grid-lib';
 import { MultiDropdownLibModule } from '@libs/multi-dropdown-lib';
 import { BasicReportLibModule } from '@libs/basic-report-lib';
+import { BlFrameModule } from '@libs/bl-frame';
 @NgModule({
   declarations: [
     AppComponent
@@ -18,7 +19,8 @@ import { BasicReportLibModule } from '@libs/basic-report-lib';
     LeftMenuLibModule,
     AgGridLibModule,
     MultiDropdownLibModule,
-    BasicReportLibModule
+    BasicReportLibModule,
+    BlFrameModule
   
   ],
   providers: [],

@@ -406,6 +406,39 @@
           }
         }
       }
+    },
+    "@libs/bl-frame": {
+      "projectType": "library",
+      "root": "projects/libs/bl-frame",
+      "sourceRoot": "projects/libs/bl-frame/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/libs/bl-frame/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/libs/bl-frame/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/libs/bl-frame/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/libs/bl-frame/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
 	}
 }

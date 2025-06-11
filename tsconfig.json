@@ -20,6 +20,10 @@
         "dist/libs/basic-report-lib",
         "dist/libs/basic-report-lib"
       ],
+      "@libs/bl-frame": [
+        "dist/libs/bl-frame",
+        "dist/libs/bl-frame"
+      ],
       "@libs/create-view-lib": [
         "dist/libs/create-view-lib"
       ],

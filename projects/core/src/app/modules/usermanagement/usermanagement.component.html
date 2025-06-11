@@ -1,24 +1,98 @@
-<lib-basic-report-lib
-  [data]="tableData"
-  [columns]="columns"
-  [title]="'Employee Report'"
-  [placeholderText]="'Employees'"
-  [showActions]="true"
-  [actionButtons]="actionButtons"
-  [tableHeight]="'400px'"
-  [enableExcelExport]="true"
-  [pagination]="false"
-  [itemsPerPage]="5"
-  [filterSection]="true"
-  [isSearchEnabled]="true"
-  [themeColor]="'red'"
-  (actionClick)="handleAction($event)"
-/>
+<!-- Top Button Bar -->
+<div class="flex flex-wrap gap-2 p-4 bg-gray-100 rounded-lg shadow mb-6">
+  <button
+    *ngFor="let style of availableLayouts"
+    (click)="toggleLayout(style)"
+    [ngClass]="{
+      'bg-emerald-600 text-white': isActive(style),
+      'bg-white text-gray-700': !isActive(style)
+    }"
+    class="px-4 py-2 rounded-lg border border-emerald-600 transition-all hover:scale-105"
+  >
+    {{ style | titlecase }}
+  </button>
+</div>
 
+<!-- Dynamically Render Multiple Layouts -->
+<bl-frame
+  *ngIf="isActive('grid')"
+  layoutStyle="grid"
+  title="Grid Layout"
+>
+  <div gridViewContent>
+    <div class="p-4 bg-gray-100 rounded">This is Grid layout content</div>
+  </div>
+</bl-frame>
 
+<bl-frame
+  *ngIf="isActive('small')"
+  layoutStyle="small"
+  title="Small Layout"
+>
+  <div gridViewContent>
+    <div class="p-4 bg-gray-100 rounded">This is Small layout content</div>
+  </div>
+</bl-frame>
 
+<bl-frame
+  *ngIf="isActive('create')"
+  layoutStyle="create"
+  title="Create Layout"
+>
+  <div createViewContent>
+    <p>This is Create layout content</p>
+  </div>
+</bl-frame>
 
+<bl-frame
+  *ngIf="isActive('modal')"
+  layoutStyle="modal"
+  title="Modal Layout"
+>
+  <div createViewContent>
+    <p>This is Modal layout content</p>
+  </div>
+</bl-frame>
 
+<bl-frame
+  *ngIf="isActive('tabbed')"
+  layoutStyle="tabbed"
+  title="Tabbed Layout"
+  [tabs]="['Tab 1', 'Tab 2']"
+>
+  <div tabViewContent>
+    <p>Tabbed Layout Content</p>
+  </div>
+</bl-frame>
 
+<bl-frame
+  *ngIf="isActive('sidebar')"
+  layoutStyle="sidebar"
+  title="Sidebar Layout"
+  [tabs]="['Dashboard', 'Profile']"
+>
+  <div tabViewContent>
+    <p>Sidebar Layout Content</p>
+  </div>
+</bl-frame>
 
- <!-- <lib-create-view-lib></lib-create-view-lib> -->
+<bl-frame
+  *ngIf="isActive('card-stack')"
+  layoutStyle="card-stack"
+  title="Card Stack Layout"
+>
+  <div gridViewContent>
+    <div class="p-4 bg-gray-100 rounded">This is Card Stack layout</div>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('wizard')"
+  layoutStyle="wizard"
+  title="Step Wizard Layout"
+  [wizardSteps]="['Step One', 'Step Two', 'Final Step']"
+>
+  <div wizardStepContent>
+    <p>This is Step Wizard content</p>
+  </div>
+</bl-frame>
