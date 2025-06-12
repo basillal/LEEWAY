@@ -1,62 +1,68 @@
-// bl-frame.component.ts
 import { Component, Input } from '@angular/core';
+
+export interface Theme {
+  themeColor: string;
+  themeTextColor: string;
+  cardBackgroundColor: string;
+  themeAccentColor: string;
+  borderRadius: string;
+  gridShadow: string;
+  showShadow: boolean; // Added
+  minHeight?: string;
+  maxHeight?: string;
+  containerHeight?: string;
+  containerWidth?: string;
+  transition?: string;
+}
 
 @Component({
   selector: 'bl-frame',
   templateUrl: './bl-frame.component.html',
-  styleUrls: ['./bl-frame.component.css']
 })
 export class BlFrameComponent {
-  @Input() layoutStyle: string = 'grid';
+  @Input() layoutStyle: 'grid' | 'small' | 'create' | 'modal' | 'tabbed' | 'sidebar' | 'card-stack' | 'wizard' | 'split-pane' | 'timeline' | 'kanban' | 'dashboard' | 'accordion' | 'form-wizard' = 'grid';
+  @Input() theme: Theme = {
+    themeColor: '#f9fafb',
+    themeTextColor: '#1f2937',
+    cardBackgroundColor: '#ffffff',
+    themeAccentColor: '#0d9488',
+    borderRadius: '0.5rem',
+    gridShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    showShadow: true, // Added
+    minHeight: '400px',
+    containerHeight: '100%',
+    containerWidth: '100%',
+    transition: 'all 0.3s ease',
+  };
   @Input() title: string = '';
-
-  // Theme customization
-  @Input() themeColor: string = '#f8f9fa';
-  @Input() themeTextColor: string = '#111827';
-  @Input() themeAccentColor: string = '#14b8a6';
-
-  // Size and layout customization
-  @Input() containerHeight: string = 'calc(100vh - 80px)';
+  @Input() tabs: string[] = ['Tab 1', 'Tab 2', 'Tab 3'];
+  @Input() wizardSteps: string[] = ['Step 1', 'Step 2', 'Step 3'];
+  @Input() currentStepIndex: number = 0;
   @Input() containerWidth: string = '100%';
-  @Input() minHeight: string = '100vh';
-  @Input() maxHeight: string = '100vh';
+  @Input() containerHeight: string = 'auto';
+  @Input() minHeight: string = '400px';
+  @Input() showShadow: boolean = true; // Added as direct input for flexibility
 
-  // Card and section customization
-  @Input() cardBackgroundColor: string = '#ffffff';
-  @Input() borderRadius: string = '1rem';
-  @Input() gridShadow: string = '0 4px 6px rgba(0, 0, 0, 0.1)';
+  activeTab: string = this.tabs[0];
 
-  // Tabbed layout
-  @Input() tabs: string[] = [];
-  @Input() activeTab: string = '';
-  setActiveTab(tab: string) {
+  openCreateView(): void {
+    // Logic to switch to create/modal view
+  }
+
+  closeCreateView(): void {
+    // Logic to close create/modal view
+  }
+
+  setActiveTab(tab: string): void {
     this.activeTab = tab;
   }
 
-  // Wizard layout
-  @Input() wizardSteps: string[] = [];
-  @Input() currentStepIndex: number = 0;
-
-  // Carousel layout (future expansion)
-  @Input() slides: any[] = [];
-  @Input() activeSlide: number = 0;
-
-  // Hero layout
-  @Input() heroImageUrl: string = '';
-
-  // Accordion layout (future expansion)
-  @Input() accordionSections: { title: string, content: string, open: boolean }[] = [];
-
-  // Actions
-  openCreateView() {
-    this.layoutStyle = 'create';
+  goToStep(index: number): void {
+    this.currentStepIndex = index;
   }
 
-  closeCreateView() {
-    this.layoutStyle = 'grid';
+  // Helper to get effective shadow value
+  get effectiveShadow(): string {
+    return (this.showShadow !== undefined ? this.showShadow : this.theme.showShadow) ? this.theme.gridShadow : 'none';
   }
 }
-
-
-/* You can now use all the layout templates dynamically through `layoutStyle`.
-   Each layout uses `@Input` properties for full customization from the parent. */

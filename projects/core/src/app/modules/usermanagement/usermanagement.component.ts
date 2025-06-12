@@ -1,5 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
+import { Theme, customSettings, defaultShadow } from './theme-settings';
 
+// Define LayoutStyle type for type safety
 type LayoutStyle =
   | 'grid'
   | 'small'
@@ -8,7 +10,13 @@ type LayoutStyle =
   | 'tabbed'
   | 'sidebar'
   | 'card-stack'
-  | 'wizard';
+  | 'wizard'
+  | 'split-pane'
+  | 'timeline'
+  | 'kanban'
+  | 'dashboard'
+  | 'accordion'
+  | 'form-wizard';
 
 @Component({
   selector: 'app-usermanagement',
@@ -16,6 +24,7 @@ type LayoutStyle =
   styleUrls: ['./usermanagement.component.css'],
 })
 export class UsermanagementComponent {
+  // Available layout styles
   layoutStyles: LayoutStyle[] = [
     'grid',
     'small',
@@ -24,17 +33,30 @@ export class UsermanagementComponent {
     'tabbed',
     'sidebar',
     'card-stack',
-    'wizard'
+    'wizard',
+    'split-pane',
+    'timeline',
+    'kanban',
+    'dashboard',
+    'accordion',
+    'form-wizard',
   ];
 
+  // Set of currently active layouts, initialized with 'grid'
   activeLayouts: Set<LayoutStyle> = new Set(['grid']);
+
+  // Import settings from theme-settings.ts
+  customSettings: Theme = customSettings;
+  defaultShadow: string = defaultShadow;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
+  // Getter for available layouts
   get availableLayouts(): LayoutStyle[] {
     return this.layoutStyles;
   }
 
+  // Toggle a layout's active state
   toggleLayout(style: LayoutStyle): void {
     if (this.activeLayouts.has(style)) {
       this.activeLayouts.delete(style);
@@ -44,20 +66,8 @@ export class UsermanagementComponent {
     this.cdr.detectChanges();
   }
 
+  // Check if a layout is active
   isActive(style: LayoutStyle): boolean {
     return this.activeLayouts.has(style);
   }
-
-  // ✨ Customization Options
-  customSettings = {
-    borderRadius: '1rem',
-    cardBackgroundColor: '#ffffff',
-    themeColor: '#f8f9fa',
-    themeTextColor: '#111827',
-    themeAccentColor: '#14b8a6',
-    showShadow: true
-  };
-  
-  defaultShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-  
 }
