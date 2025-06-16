@@ -10,6 +10,7 @@ module.exports = {
     "./projects/libs/basic-report-lib/**/*.{html,ts}",
     "./projects/libs/create-view-lib/**/*.{html,ts}",
 
+    './projects/bl-frame/src/**/*.{html,ts}', // Adjust path if tailwind.config.js is in workspace root
     "./node_modules/flowbite/**/*.js" // add this line
 
   ],

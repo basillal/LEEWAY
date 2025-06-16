@@ -70,4 +70,6 @@ export class UsermanagementComponent {
   isActive(style: LayoutStyle): boolean {
     return this.activeLayouts.has(style);
   }
+
+  
 }

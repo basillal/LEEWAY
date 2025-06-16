@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 export interface Theme {
   themeColor: string;
@@ -18,6 +18,7 @@ export interface Theme {
 @Component({
   selector: 'bl-frame',
   templateUrl: './bl-frame.component.html',
+  encapsulation: ViewEncapsulation.None // Allow global styles like Tailwind
 })
 export class BlFrameComponent {
   @Input() layoutStyle: 'grid' | 'small' | 'create' | 'modal' | 'tabbed' | 'sidebar' | 'card-stack' | 'wizard' | 'split-pane' | 'timeline' | 'kanban' | 'dashboard' | 'accordion' | 'form-wizard' = 'grid';
