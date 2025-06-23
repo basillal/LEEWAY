@@ -22,7 +22,10 @@
   }">
     <div class="flex items-center justify-between mb-4 sm:mb-6 pl-4"
       [ngStyle]="{ borderRadius: theme.borderRadius, transition: theme.transition }">
-      <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight"
+      <h1 class="text-xl sm:texFinal Step
+      4
+      Extra Step
+      This is Step Wizard contentt-2xl font-extrabold tracking-tight"
         [ngStyle]="{ color: theme.themeTextColor, borderLeft: '4px solid ' + theme.themeAccentColor }">
         {{ title }}
       </h1>
@@ -142,7 +145,6 @@
     </div>
   </div>
 </ng-container>
-
 <!-- 📑 Tabbed Layout -->
 <ng-container *ngIf="layoutStyle === 'tabbed'">
   <div class="w-full p-6 sm:p-8"
@@ -155,10 +157,11 @@
       color: theme.themeTextColor,
       transition: theme.transition
     }">
-    <h2 class="text-lg sm:text-xl font-bold mb-4"
-      [ngStyle]="{ color: theme.themeTextColor }">
+    <h2 class="text-lg sm:text-xl font-bold mb-4" [ngStyle]="{ color: theme.themeTextColor }">
       {{ title }}
     </h2>
+
+    <!-- Tab Buttons -->
     <div class="flex flex-wrap gap-2 sm:gap-4 border-b border-gray-200 dark:border-gray-700">
       <button *ngFor="let tab of tabs"
         class="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base font-medium border-b-2 transition-all duration-200"
@@ -171,11 +174,16 @@
         {{ tab }}
       </button>
     </div>
+
+    <!-- Tab Content -->
     <div class="p-4 sm:p-6 space-y-4 max-h-[70vh] overflow-y-auto w-full">
-      <ng-content select="[tab-view-content]"></ng-content>
+      <ng-container *ngIf="tabTemplates[activeTab]">
+        <ng-container *ngTemplateOutlet="tabTemplates[activeTab]"></ng-container>
+      </ng-container>
     </div>
   </div>
 </ng-container>
+
 
 <!-- 📘 Sidebar Layout -->
 <ng-container *ngIf="layoutStyle === 'sidebar'">
@@ -243,7 +251,6 @@
     </div>
   </div>
 </ng-container>
-
 <!-- 🧙 Wizard Layout -->
 <ng-container *ngIf="layoutStyle === 'wizard'">
   <div class="w-full overflow-hidden"
@@ -263,10 +270,13 @@
         boxShadow: theme.gridShadow,
         transition: theme.transition
       }">
+      
       <!-- Wizard Steps -->
       <div class="flex flex-wrap items-center justify-between mb-4 sm:mb-6 gap-2">
         <div *ngFor="let step of wizardSteps; let i = index" class="flex-1 text-center min-w-[80px]">
-          <div class="w-8 h-8 mx-auto mb-1 rounded-full flex items-center justify-center border-2 transition-all duration-200"
+          <div
+            class="w-8 h-8 mx-auto mb-1 rounded-full flex items-center justify-center border-2 transition-all duration-200 cursor-pointer"
+            (click)="goToStep(i)"
             [ngClass]="{
               'bg-[var(--accent-color, #0d9488)] text-white border-[var(--accent-color, #0d9488)]': i === currentStepIndex,
               'border-gray-300 text-gray-500 dark:border-gray-600 dark:text-gray-400': i !== currentStepIndex
@@ -279,13 +289,19 @@
           </span>
         </div>
       </div>
+
       <!-- Wizard Content -->
       <div class="text-sm sm:text-base space-y-4">
-        <ng-content select="[wizard-step-content]"></ng-content>
+        <ng-container *ngIf="stepTemplates[currentStepIndex]">
+          <ng-container *ngTemplateOutlet="stepTemplates[currentStepIndex]"></ng-container>
+        </ng-container>
       </div>
     </div>
   </div>
 </ng-container>
+
+
+
 
 <!-- 🌗 Split Pane Layout -->
 <ng-container *ngIf="layoutStyle === 'split-pane'">
