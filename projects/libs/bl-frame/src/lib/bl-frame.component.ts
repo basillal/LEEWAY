@@ -101,8 +101,8 @@ export class BlFrameComponent implements AfterContentInit {
     }
 
     // Debug logging
-    console.log('✅ Tab Templates:', this.tabTemplates);
-    console.log('👉 Active Tab:', this.activeTab);
+    // console.log('✅ Tab Templates:', this.tabTemplates);
+    // console.log('👉 Active Tab:', this.activeTab);
   }
 
   openCreateView(): void {}
