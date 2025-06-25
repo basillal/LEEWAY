@@ -14,11 +14,17 @@
 </ng-template>
 </bl-frame> -->
 
-<bl-frame layoutStyle="wizard" [wizardSteps]="['Info', 'Confirm']" [currentStepIndex]="0">
-  <ng-template wizard-step [stepIndex]="0">
-    Step 1 content
+<bl-frame
+  layoutStyle="wizard"
+  [wizardSteps]="['Info', 'Confirm']"
+  [currentStepIndex]="0"
+>
+  <ng-template [wizardStep]="0">
+    <div class="p-4 bg-yellow-100">Step 1 content</div>
   </ng-template>
-  <ng-template wizard-step [stepIndex]="1">
-    Step 2 content
+
+  <ng-template [wizardStep]="1">
+    <div class="p-4 bg-green-100">Step 2 content</div>
   </ng-template>
 </bl-frame>
+
