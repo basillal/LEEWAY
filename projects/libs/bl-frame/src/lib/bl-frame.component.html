@@ -175,12 +175,12 @@
       </button>
     </div>
 
-    <!-- Tab Content -->
-    <div class="p-4 sm:p-6 space-y-4 max-h-[70vh] overflow-y-auto w-full">
-      <ng-container *ngIf="tabTemplates[activeTab]">
-        <ng-container *ngTemplateOutlet="tabTemplates[activeTab]"></ng-container>
-      </ng-container>
-    </div>
+<!-- Tab Content -->
+<div class="p-4 sm:p-6 space-y-4 max-h-[70vh] overflow-y-auto w-full bg-blue-100">
+  <ng-container *ngIf="tabTemplates[activeTab]">
+    <ng-container *ngTemplateOutlet="tabTemplates[activeTab]"></ng-container>
+  </ng-container>
+</div>
   </div>
 </ng-container>
 
