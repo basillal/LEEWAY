@@ -143,6 +143,23 @@ export interface Theme {
     Details tab content
   </ng-template>
 </bl-frame>
+
+
+<bl-frame
+  [layoutStyle]="'tabbed'"
+  [tabs]="['Overview', 'Details', 'Settings']"
+  [title]="'Tabbed Demo'"
+>
+<ng-template [tabContent]="'Overview'">
+  <div class="bg-green-100 p-4">This is the Overview tab content.</div>
+</ng-template>
+<ng-template [tabContent]="'Details'">
+  <div class="bg-yellow-100 p-4">This is the Details tab content.</div>
+</ng-template>
+<ng-template [tabContent]="'Settings'">
+  <div class="bg-blue-100 p-4">This is the Settings tab content.</div>
+</ng-template>
+</bl-frame>
 ```
 
 ### `sidebar`
@@ -167,12 +184,17 @@ export interface Theme {
 ### `wizard`
 
 ```html
-<bl-frame layoutStyle="wizard" [wizardSteps]="['Info', 'Confirm']" [currentStepIndex]="0">
-  <ng-template wizard-step [stepIndex]="0">
-    Step 1 content
+<bl-frame
+  layoutStyle="wizard"
+  [wizardSteps]="['Info', 'Confirm']"
+  [currentStepIndex]="0"
+>
+  <ng-template [wizardStep]="0">
+    <div class="p-4 bg-yellow-100">Step 1 content</div>
   </ng-template>
-  <ng-template wizard-step [stepIndex]="1">
-    Step 2 content
+
+  <ng-template [wizardStep]="1">
+    <div class="p-4 bg-green-100">Step 2 content</div>
   </ng-template>
 </bl-frame>
 ```
