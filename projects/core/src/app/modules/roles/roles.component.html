@@ -1,28 +1,15 @@
-<!-- <bl-frame
-  layoutStyle="tabbed"
-  title="My Tabs"
-  [tabs]="['Tab A', 'Tab B', 'Tab C']"
+<bl-frame
+  [layoutStyle]="'tabbed'"
+  [tabs]="['Overview', 'Details', 'Settings']"
+  [title]="'Tabbed Demo'"
 >
-  <ng-template tabContent="Tab A">
-    <div class="p-4 bg-green-100 rounded">Content for Tab A</div>
-  </ng-template>
-
-  <ng-template tabContent="Tab B">
-    <div class="p-4 bg-blue-100 rounded">Content for Tab B</div>
-  </ng-template>
-
-  <ng-template tabContent="Tab C">
-    <div class="p-4 bg-yellow-100 rounded">Content for Tab C</div>
-  </ng-template>
-</bl-frame> -->
-
-
-<bl-frame layoutStyle="tabbed" [tabs]="['Details', 'Settings']" title="User Profile">
-  <ng-template tabContent="Details">
-    <p>This is the Details tab content</p>
-  </ng-template>
-
-  <ng-template tabContent="Settings">
-    <p>This is the Settings tab content</p>
-  </ng-template>
+<ng-template [tabContent]="'Overview'">
+  <div class="bg-green-100 p-4">This is the Overview tab content.</div>
+</ng-template>
+<ng-template [tabContent]="'Details'">
+  <div class="bg-yellow-100 p-4">This is the Details tab content.</div>
+</ng-template>
+<ng-template [tabContent]="'Settings'">
+  <div class="bg-blue-100 p-4">This is the Settings tab content.</div>
+</ng-template>
 </bl-frame>

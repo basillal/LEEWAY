@@ -19,7 +19,7 @@ import { TabContentDirective } from './tab-content.directive';
     ReactiveFormsModule
   ],
   exports: [
-    BlFrameComponent,WizardStepDirective,
+    BlFrameComponent,WizardStepDirective,TabContentDirective
     
   ]
 })

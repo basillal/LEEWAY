@@ -78,7 +78,7 @@ export class BlFrameComponent implements AfterContentInit {
   stepTemplates: TemplateRef<any>[] = [];
   tabTemplates: { [key: string]: TemplateRef<any> } = {};
 
-  activeTab: string = this.tabs[0];
+  activeTab: string = '';
 
   ngAfterContentInit() {
     // Wizard steps
@@ -90,13 +90,19 @@ export class BlFrameComponent implements AfterContentInit {
     // Tab content mapping
     this.tabTemplates = {};
     this.tabContentTemplates?.forEach((tpl) => {
-      this.tabTemplates[tpl.tabName] = tpl.templateRef;
+      if (tpl.tabName) {
+        this.tabTemplates[tpl.tabName] = tpl.templateRef;
+      }
     });
 
     // Set first active tab if not already
     if (!this.activeTab && this.tabs.length > 0) {
       this.activeTab = this.tabs[0];
     }
+
+    // Debug logging
+    console.log('✅ Tab Templates:', this.tabTemplates);
+    console.log('👉 Active Tab:', this.activeTab);
   }
 
   openCreateView(): void {}
