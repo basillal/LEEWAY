@@ -95,7 +95,7 @@ export class BlFrameComponent implements AfterContentInit {
       }
     });
 
-    // Set first active tab if not already1
+    // Set first active tab if not already
     if (!this.activeTab && this.tabs.length > 0) {
       this.activeTab = this.tabs[0];
     }
