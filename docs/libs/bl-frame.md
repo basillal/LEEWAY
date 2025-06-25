@@ -144,7 +144,7 @@ export interface Theme {
   </ng-template>
 </bl-frame>
 
-
+----------------------------------------------------
 <bl-frame
   [layoutStyle]="'tabbed'"
   [tabs]="['Overview', 'Details', 'Settings']"
