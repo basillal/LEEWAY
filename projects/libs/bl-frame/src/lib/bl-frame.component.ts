@@ -87,7 +87,7 @@ export class BlFrameComponent implements AfterContentInit {
       .sort((a, b) => a.stepIndex - b.stepIndex)
       .map((step) => step.templateRef) ?? [];
 
-    // Tab content mapping added
+    // Tab content mapping added1
     this.tabTemplates = {};
     this.tabContentTemplates?.forEach((tpl) => {
       if (tpl.tabName) {
