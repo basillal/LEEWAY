@@ -15,7 +15,7 @@
 - **Easy Styling**: Uses Tailwind CSS for quick and customizable designs.
 - **Flexible**: Customize colors, sizes, and transitions with a simple `theme` object.
 - **Open Source**: Free to use, modify, and contribute to on [GitHub](https://github.com/your-github-username/bl-frame).
-- **Community-Friendly**: Join other developers to improve and share ideas!
+- **Community-Friendly**: Join other developers to improve and share ideas
 
 ## Quick Start
 
@@ -23,7 +23,7 @@ Get started in just a few steps:
 
 1. **Install the package**:
    ```bash
-   npm install bl-frame
+   npm install bl-frame 
    ```
 
 2. **Add to your Angular app**:
