@@ -337,8 +337,8 @@ Found a bug or want a new feature? Create an issue on [GitHub](https://github.co
 ## Author
 
 - **Name**: BASIL LAL
-- **GitHub**: [https://github.com/basillal](https://github.com/your-github-username)
-- **LinkedIn**: [www.linkedin.com/in/basil-lal-556361244](https://www.linkedin.com/in/your-linkedin-profile)
+- **GitHub**: [https://github.com/basillal](https://github.com/basillal)
+- **LinkedIn**: [www.linkedin.com/in/basil-lal-556361244](www.linkedin.com/in/basil-lal-556361244)
 - **Email**: basillal1010@egmail.com
 
 ## Get Involved
