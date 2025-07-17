@@ -7,7 +7,7 @@
 
 ## What is BlFrameComponent?
 
-`BlFrameComponent` is an easy-to-use Angular component library that helps you create beautiful and flexible layouts for your web apps. It supports 14 different layouts, like grids, tabs, wizards, and modals, all styled with Tailwind CSS. Whether you're building a dashboard, a form, or a task board, this component makes it simple to create modern, responsive interfaces
+`BlFrameComponent` is an easy-to-use Angular component library that helps you create beautiful and flexible layouts for your web apps. It supports 14 different layouts, like grids, tabs, wizards, and modals, all styled with Tailwind CSS. Whether you're building a dashboard, a form, or a task board, this component makes it simple to create modern, responsive interfaces..
 
 ## Why Choose BlFrameComponent?
 
