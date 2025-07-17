@@ -349,4 +349,4 @@ Found a bug or want a new feature? Create an issue on [GitHub](https://github.co
 
 ## License
 
-This project is licensed under the [LEEWAY](LICENSE).
+This project is licensed under the [LEEWAY](LEEWAY).
