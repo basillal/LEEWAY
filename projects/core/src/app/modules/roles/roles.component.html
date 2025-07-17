@@ -1,4 +1,4 @@
-<bl-frame
+<!-- <bl-frame
   [layoutStyle]="'tabbed'"
   [tabs]="['Overview', 'Details', 'Settings']"
   [title]="'Tabbed Demo'"
@@ -26,5 +26,29 @@
   <ng-template [wizardStep]="1">
     <div class="p-4 bg-green-100">Step 2 content</div>
   </ng-template>
+</bl-frame>
+ -->
+
+<!-- 🌐 Grid View -->
+<bl-frame
+  *ngIf="layoutStyle === 'grid'"
+  [layoutStyle]="'grid'"
+  [title]="'Custom Grid'"
+  (createClicked)="openCreate()"
+>
+  <div grid-view-content class="p-4">Custom Themed Card</div>
+</bl-frame>
+
+<!-- ✍️ Create View -->
+<bl-frame
+  *ngIf="layoutStyle === 'create'"
+  [layoutStyle]="'create'"
+  [title]="'Create View'"
+  (backClicked)="backToGrid()"
+>
+  <form style="background-color: red;" create-view-content>
+    <input type="text" placeholder="Enter something..." />
+    <button type="submit">Submit</button>
+  </form>
 </bl-frame>
 

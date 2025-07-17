@@ -5,7 +5,9 @@ import {
   ViewEncapsulation,
   ContentChildren,
   QueryList,
-  AfterContentInit
+  AfterContentInit,
+  Output,
+  EventEmitter
 } from '@angular/core';
 
 import { WizardStepDirective } from './wizard-step.directive';
@@ -104,10 +106,16 @@ export class BlFrameComponent implements AfterContentInit {
     console.log('✅ Tab Templates:', this.tabTemplates);
     console.log('👉 Active Tab:', this.activeTab);
   }
-
-  openCreateView(): void {}
-
-  closeCreateView(): void {}
+  @Output() createClicked = new EventEmitter<void>();
+  @Output() backClicked = new EventEmitter<void>();
+  
+  openCreateView(): void {
+    this.createClicked.emit();
+  }
+  
+  closeCreateView(): void {
+    this.backClicked.emit();
+  }
 
   setActiveTab(tab: string): void {
     this.activeTab = tab;

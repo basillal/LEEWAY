@@ -20,5 +20,15 @@ export class RolesComponent {
     }
   }
 
+  layoutStyle: 'grid' | 'create' = 'grid';
+
+openCreate() {
+  this.layoutStyle = 'create';
+}
+
+backToGrid() {
+  this.layoutStyle = 'grid';
+}
+
   
 }

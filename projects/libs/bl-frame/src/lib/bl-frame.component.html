@@ -11,114 +11,82 @@
   transition: theme.transition
 }">
 
-<!-- 🌐 Grid Layout -->
-<ng-container *ngIf="layoutStyle === 'grid'">
-  <div class="w-full overflow-y-auto" [ngStyle]="{
+  <!-- 🌐 Grid Layout -->
+  <ng-container *ngIf="layoutStyle === 'grid'">
+    <div class="w-full overflow-y-auto" [ngStyle]="{
     maxHeight: theme.containerHeight,
     minHeight: theme.minHeight,
     backgroundColor: theme.themeColor,
     color: theme.themeTextColor,
     width: theme.containerWidth
   }">
-    <div class="flex items-center justify-between mb-4 sm:mb-6 pl-4"
-      [ngStyle]="{ borderRadius: theme.borderRadius, transition: theme.transition }">
-      <h1 class="text-xl sm:texFinal Step
+      <div class="flex items-center justify-between mb-4 sm:mb-6 p-6"
+        [ngStyle]="{ borderRadius: theme.borderRadius, transition: theme.transition }">
+        <h1 class="text-xl sm:texFinal Step
       4
       Extra Step
       This is Step Wizard contentt-2xl font-extrabold tracking-tight"
-        [ngStyle]="{ color: theme.themeTextColor, borderLeft: '4px solid ' + theme.themeAccentColor }">
-        {{ title }}
-      </h1>
-      <button (click)="openCreateView()"
-        class="bg-[var(--accent-color, #0d9488)] text-white w-10 sm:w-12 h-10 sm:h-12 rounded-full shadow-md hover:scale-105 transition-all duration-300"
-        [ngStyle]="{ backgroundColor: theme.themeAccentColor }">
-        <i class="fa-solid fa-circle-plus text-lg sm:text-xl"></i>
-      </button>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
-      [ngStyle]="{
+          [ngStyle]="{ color: theme.themeTextColor, borderLeft: '4px solid ' + theme.themeAccentColor }">
+          {{ title }}
+        </h1>
+        <button (click)="openCreateView()"
+          class="bg-[var(--accent-color, #0d9488)] text-white w-10 sm:w-12 h-10 sm:h-12 rounded-full shadow-md hover:scale-105 transition-all duration-300"
+          [ngStyle]="{ backgroundColor: theme.themeAccentColor }">
+          <i class="fa-solid fa-circle-plus text-lg sm:text-xl"></i>
+        </button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 p-4" [ngStyle]="{
         backgroundColor: theme.cardBackgroundColor,
         borderRadius: theme.borderRadius,
         boxShadow: theme.gridShadow,
         width: theme.containerWidth,
         transition: theme.transition
       }">
-      <ng-content select="[grid-view-content]"></ng-content>
+        <ng-content select="[grid-view-content]"></ng-content>
+      </div>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
 
-<!-- 📏 Small Layout -->
-<ng-container *ngIf="layoutStyle === 'small'">
-  <div class="w-full overflow-y-auto" [ngStyle]="{
+  <!-- 📏 Small Layout -->
+  <ng-container *ngIf="layoutStyle === 'small'">
+    <div class="w-full overflow-y-auto" [ngStyle]="{
     maxHeight: theme.containerHeight,
     minHeight: theme.minHeight,
     backgroundColor: theme.themeColor,
     color: theme.themeTextColor,
     width: theme.containerWidth
   }">
-    <div class="flex items-center justify-between mb-4 pl-4"
-      [ngStyle]="{ borderRadius: theme.borderRadius, transition: theme.transition }">
-      <h2 class="text-lg sm:text-xl font-semibold"
-        [ngStyle]="{ color: theme.themeTextColor }">
-        {{ title }}
-      </h2>
-      <button (click)="openCreateView()"
-        class="bg-[var(--accent-color, #0d9488)] text-white w-8 sm:w-10 h-8 sm:h-10 rounded-full shadow hover:scale-105 transition-all duration-300"
-        [ngStyle]="{ backgroundColor: theme.themeAccentColor }">
-        <i class="fa-solid fa-circle-plus text-base sm:text-lg"></i>
-      </button>
-    </div>
-    <div class="p-4 sm:p-6 w-full"
-      [ngStyle]="{
-        backgroundColor: theme.cardBackgroundColor,
-        borderRadius: theme.borderRadius,
-        boxShadow: theme.gridShadow,
-        transition: theme.transition
-      }">
-      <ng-content select="[grid-view-content]"></ng-content>
-    </div>
-  </div>
-</ng-container>
-
-<!-- ✍️ Create Layout -->
-<ng-container *ngIf="layoutStyle === 'create'">
-  <div class="w-full overflow-y-auto" [ngStyle]="{
-    maxHeight: theme.containerHeight,
-    minHeight: theme.minHeight,
-    backgroundColor: theme.themeColor,
-    color: theme.themeTextColor,
-    width: theme.containerWidth
-  }">
-    <div class="p-6 sm:p-8 w-full space-y-6"
-      [ngStyle]="{
-        backgroundColor: theme.cardBackgroundColor,
-        borderRadius: theme.borderRadius,
-        boxShadow: theme.gridShadow,
-        transition: theme.transition
-      }">
-      <div class="flex justify-between items-center">
-        <span class="text-xl sm:text-2xl font-bold"
-          [ngStyle]="{ color: theme.themeTextColor }">
-          Create New
-        </span>
-        <button (click)="closeCreateView()"
-          class="text-[var(--accent-color, #0d9488)] hover:text-[var(--accent-color, #0d9488)]/80 transition"
-          [ngStyle]="{ color: theme.themeTextColor }">
-          <i class="fa-solid fa-xmark text-lg sm:text-xl"></i>
+      <div class="flex items-center justify-between mb-4 pl-4"
+        [ngStyle]="{ borderRadius: theme.borderRadius, transition: theme.transition }">
+        <h2 class="text-lg sm:text-xl font-semibold" [ngStyle]="{ color: theme.themeTextColor }">
+          {{ title }}
+        </h2>
+        <button (click)="openCreateView()"
+          class="bg-[var(--accent-color, #0d9488)] text-white w-8 sm:w-10 h-8 sm:h-10 rounded-full shadow hover:scale-105 transition-all duration-300"
+          [ngStyle]="{ backgroundColor: theme.themeAccentColor }">
+          <i class="fa-solid fa-circle-plus text-base sm:text-lg"></i>
         </button>
       </div>
-      <ng-content select="[create-view-content]"></ng-content>
+      <div class="p-4 sm:p-6 w-full" [ngStyle]="{
+        backgroundColor: theme.cardBackgroundColor,
+        borderRadius: theme.borderRadius,
+        boxShadow: theme.gridShadow,
+        transition: theme.transition
+      }">
+        <ng-content select="[grid-view-content]"></ng-content>
+      </div>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
 
-<!-- 🖼️ Modal Layout -->
-<ng-container *ngIf="layoutStyle === 'modal'">
-  <div class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 w-full transition-all duration-300"
-    [ngStyle]="{ backgroundColor: theme.themeColor, transition: theme.transition }">
-    <div class="w-full max-w-md sm:max-w-lg overflow-y-auto"
-      [ngStyle]="{
+  <!-- ✍️ Create Layout -->
+   
+
+  <!-- 🖼️ Modal Layout -->
+  <ng-container *ngIf="layoutStyle === 'modal'">
+    <div
+      class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 w-full transition-all duration-300"
+      [ngStyle]="{ backgroundColor: theme.themeColor, transition: theme.transition }">
+      <div class="w-full max-w-md sm:max-w-lg overflow-y-auto" [ngStyle]="{
         maxHeight: '90vh',
         minHeight: theme.minHeight,
         backgroundColor: theme.cardBackgroundColor,
@@ -128,27 +96,25 @@
         color: theme.themeTextColor,
         transition: theme.transition
       }">
-      <div class="p-4 sm:p-6 space-y-4">
-        <div class="flex justify-between items-center">
-          <span class="text-lg sm:text-xl font-bold"
-            [ngStyle]="{ color: theme.themeTextColor }">
-            {{ title }}
-          </span>
-          <button (click)="closeCreateView()"
-            class="text-[var(--accent-color, #0d9488)] hover:text-[var(--accent-color, #0d9488)]/80 transition"
-            [ngStyle]="{ color: theme.themeTextColor }">
-            <i class="fa-solid fa-xmark text-base sm:text-lg"></i>
-          </button>
+        <div class="p-4 sm:p-6 space-y-4">
+          <div class="flex justify-between items-center">
+            <span class="text-lg sm:text-xl font-bold" [ngStyle]="{ color: theme.themeTextColor }">
+              {{ title }}
+            </span>
+            <button (click)="closeCreateView()"
+              class="text-[var(--accent-color, #0d9488)] hover:text-[var(--accent-color, #0d9488)]/80 transition"
+              [ngStyle]="{ color: theme.themeTextColor }">
+              <i class="fa-solid fa-xmark text-base sm:text-lg"></i>
+            </button>
+          </div>
+          <ng-content select="[create-view-content]"></ng-content>
         </div>
-        <ng-content select="[create-view-content]"></ng-content>
       </div>
     </div>
-  </div>
-</ng-container>
-<!-- 📑 Tabbed Layout 11-->
-<ng-container *ngIf="layoutStyle === 'tabbed'">
-  <div class="w-full p-6 sm:p-8"
-    [ngStyle]="{
+  </ng-container>
+  <!-- 📑 Tabbed Layout 11-->
+  <ng-container *ngIf="layoutStyle === 'tabbed'">
+    <div class="w-full p-6 sm:p-8" [ngStyle]="{
       backgroundColor: theme.cardBackgroundColor,
       borderRadius: theme.borderRadius,
       boxShadow: theme.gridShadow,
@@ -157,83 +123,75 @@
       color: theme.themeTextColor,
       transition: theme.transition
     }">
-    <h2 class="text-lg sm:text-xl font-bold mb-4" [ngStyle]="{ color: theme.themeTextColor }">
-      {{ title }}
-    </h2>
+      <h2 class="text-lg sm:text-xl font-bold mb-4" [ngStyle]="{ color: theme.themeTextColor }">
+        {{ title }}
+      </h2>
 
-    <!-- Tab Buttons 1-->
-    <div class="flex flex-wrap gap-2 sm:gap-4 border-b border-gray-200 dark:border-gray-700">
-      <button *ngFor="let tab of tabs"
-        class="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base font-medium border-b-2 transition-all duration-200"
-        [ngClass]="{
+      <!-- Tab Buttons 1-->
+      <div class="flex flex-wrap gap-2 sm:gap-4 border-b border-gray-200 dark:border-gray-700">
+        <button *ngFor="let tab of tabs"
+          class="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm sm:text-base font-medium border-b-2 transition-all duration-200"
+          [ngClass]="{
           'border-[var(--accent-color, #0d9488)] text-[var(--accent-color, #0d9488)] font-semibold': tab === activeTab,
           'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300': tab !== activeTab
-        }"
-        (click)="setActiveTab(tab)">
-        <i class="fa-solid fa-circle-dot text-xs" *ngIf="tab === activeTab"></i>
-        {{ tab }}
-      </button>
+        }" (click)="setActiveTab(tab)">
+          <i class="fa-solid fa-circle-dot text-xs" *ngIf="tab === activeTab"></i>
+          {{ tab }}
+        </button>
+      </div>
+
+      <!-- Tab Content -->
+      <div class="p-4 sm:p-6 space-y-4 max-h-[70vh] overflow-y-auto w-full bg-blue-100">
+        <ng-container *ngIf="tabTemplates[activeTab]">
+          <ng-container *ngTemplateOutlet="tabTemplates[activeTab]"></ng-container>
+        </ng-container>
+      </div>
     </div>
-
-<!-- Tab Content -->
-<div class="p-4 sm:p-6 space-y-4 max-h-[70vh] overflow-y-auto w-full bg-blue-100">
-  <ng-container *ngIf="tabTemplates[activeTab]">
-    <ng-container *ngTemplateOutlet="tabTemplates[activeTab]"></ng-container>
   </ng-container>
-</div>
-  </div>
-</ng-container>
 
 
-<!-- 📘 Sidebar Layout -->
-<ng-container *ngIf="layoutStyle === 'sidebar'">
-  <div class="flex flex-col sm:flex-row min-h-screen w-full overflow-hidden"
-    [ngStyle]="{
+  <!-- 📘 Sidebar Layout -->
+  <ng-container *ngIf="layoutStyle === 'sidebar'">
+    <div class="flex flex-col sm:flex-row min-h-screen w-full overflow-hidden" [ngStyle]="{
       backgroundColor: theme.cardBackgroundColor,
       borderRadius: theme.borderRadius,
       boxShadow: theme.gridShadow,
       color: theme.themeTextColor,
       transition: theme.transition
     }">
-    <aside class="w-full sm:w-64 bg-gray-100 dark:bg-gray-800 border-r p-4"
-      [ngStyle]="{ transition: theme.transition }">
-      <div class="font-semibold text-lg sm:text-xl text-gray-700 dark:text-gray-200 mb-4"
-        [ngStyle]="{ color: theme.themeTextColor }">
-        Menu
-      </div>
-      <ul class="space-y-2">
-        <li *ngFor="let tab of tabs"
-          class="p-2 sm:p-3 cursor-pointer rounded transition-all duration-200"
-          [ngClass]="{
+      <aside class="w-full sm:w-64 bg-gray-100 dark:bg-gray-800 border-r p-4"
+        [ngStyle]="{ transition: theme.transition }">
+        <div class="font-semibold text-lg sm:text-xl text-gray-700 dark:text-gray-200 mb-4"
+          [ngStyle]="{ color: theme.themeTextColor }">
+          Menu
+        </div>
+        <ul class="space-y-2">
+          <li *ngFor="let tab of tabs" class="p-2 sm:p-3 cursor-pointer rounded transition-all duration-200" [ngClass]="{
             'bg-[var(--accent-color, #0d9488)]/10 text-[var(--accent-color, #0d9488)] font-semibold': tab === activeTab,
             'text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700': tab !== activeTab
-          }"
-          (click)="setActiveTab(tab)">
-          {{ tab }}
-        </li>
-      </ul>
-    </aside>
-    <main class="flex-1 p-4 sm:p-6"
-      [ngStyle]="{
+          }" (click)="setActiveTab(tab)">
+            {{ tab }}
+          </li>
+        </ul>
+      </aside>
+      <main class="flex-1 p-4 sm:p-6" [ngStyle]="{
         backgroundColor: theme.themeColor,
         color: theme.themeTextColor,
         width: theme.containerWidth,
         minHeight: theme.minHeight,
         transition: theme.transition
       }">
-      <h2 class="text-lg sm:text-xl font-semibold mb-4"
-        [ngStyle]="{ color: theme.themeTextColor }">
-        {{ title }}
-      </h2>
-      <ng-content select="[tab-view-content]"></ng-content>
-    </main>
-  </div>
-</ng-container>
+        <h2 class="text-lg sm:text-xl font-semibold mb-4" [ngStyle]="{ color: theme.themeTextColor }">
+          {{ title }}
+        </h2>
+        <ng-content select="[tab-view-content]"></ng-content>
+      </main>
+    </div>
+  </ng-container>
 
-<!-- 📚 Card Stack Layout -->
-<ng-container *ngIf="layoutStyle === 'card-stack'">
-  <div class="w-full p-6 sm:p-8 space-y-6"
-    [ngStyle]="{
+  <!-- 📚 Card Stack Layout -->
+  <ng-container *ngIf="layoutStyle === 'card-stack'">
+    <div class="w-full p-6 sm:p-8 space-y-6" [ngStyle]="{
       backgroundColor: theme.cardBackgroundColor,
       borderRadius: theme.borderRadius,
       boxShadow: theme.gridShadow,
@@ -242,19 +200,17 @@
       color: theme.themeTextColor,
       transition: theme.transition
     }">
-    <h1 class="text-xl sm:text-2xl font-bold"
-      [ngStyle]="{ color: theme.themeTextColor }">
-      {{ title }}
-    </h1>
-    <div class="space-y-4 sm:space-y-6">
-      <ng-content select="[grid-view-content]"></ng-content>
+      <h1 class="text-xl sm:text-2xl font-bold" [ngStyle]="{ color: theme.themeTextColor }">
+        {{ title }}
+      </h1>
+      <div class="space-y-4 sm:space-y-6">
+        <ng-content select="[grid-view-content]"></ng-content>
+      </div>
     </div>
-  </div>
-</ng-container>
-<!-- 🧙 Wizard Layout -->
-<ng-container *ngIf="layoutStyle === 'wizard'">
-  <div class="w-full overflow-hidden"
-    [ngStyle]="{
+  </ng-container>
+  <!-- 🧙 Wizard Layout -->
+  <ng-container *ngIf="layoutStyle === 'wizard'">
+    <div class="w-full overflow-hidden" [ngStyle]="{
       backgroundColor: theme.themeColor,
       color: theme.themeTextColor,
       minHeight: theme.minHeight,
@@ -263,97 +219,89 @@
       width: theme.containerWidth,
       transition: theme.transition
     }">
-    <div class="p-6 sm:p-8 overflow-auto"
-      [ngStyle]="{
+      <div class="p-6 sm:p-8 overflow-auto" [ngStyle]="{
         backgroundColor: theme.cardBackgroundColor,
         borderRadius: theme.borderRadius,
         boxShadow: theme.gridShadow,
         transition: theme.transition
       }">
-      
-      <!-- Wizard Steps -->
-      <div class="flex flex-wrap items-center justify-between mb-4 sm:mb-6 gap-2">
-        <div *ngFor="let step of wizardSteps; let i = index" class="flex-1 text-center min-w-[80px]">
-          <div
-            class="w-8 h-8 mx-auto mb-1 rounded-full flex items-center justify-center border-2 transition-all duration-200 cursor-pointer"
-            (click)="goToStep(i)"
-            [ngClass]="{
+
+        <!-- Wizard Steps -->
+        <div class="flex flex-wrap items-center justify-between mb-4 sm:mb-6 gap-2">
+          <div *ngFor="let step of wizardSteps; let i = index" class="flex-1 text-center min-w-[80px]">
+            <div
+              class="w-8 h-8 mx-auto mb-1 rounded-full flex items-center justify-center border-2 transition-all duration-200 cursor-pointer"
+              (click)="goToStep(i)" [ngClass]="{
               'bg-[var(--accent-color, #0d9488)] text-white border-[var(--accent-color, #0d9488)]': i === currentStepIndex,
               'border-gray-300 text-gray-500 dark:border-gray-600 dark:text-gray-400': i !== currentStepIndex
             }">
-            {{ i + 1 }}
+              {{ i + 1 }}
+            </div>
+            <span class="text-xs sm:text-sm block truncate" [ngStyle]="{ color: theme.themeTextColor }">
+              {{ step }}
+            </span>
           </div>
-          <span class="text-xs sm:text-sm block truncate"
-            [ngStyle]="{ color: theme.themeTextColor }">
-            {{ step }}
-          </span>
+        </div>
+
+        <!-- Wizard Content -->
+        <div class="text-sm sm:text-base space-y-4">
+          <ng-container *ngIf="stepTemplates[currentStepIndex]">
+            <ng-container *ngTemplateOutlet="stepTemplates[currentStepIndex]"></ng-container>
+          </ng-container>
         </div>
       </div>
+    </div>
+  </ng-container>
 
-      <!-- Wizard Content -->
-      <div class="text-sm sm:text-base space-y-4">
-        <ng-container *ngIf="stepTemplates[currentStepIndex]">
-          <ng-container *ngTemplateOutlet="stepTemplates[currentStepIndex]"></ng-container>
-        </ng-container>
+
+
+
+  <!-- 🌗 Split Pane Layout -->
+  <ng-container *ngIf="layoutStyle === 'split-pane'">
+    <div class="flex flex-col sm:flex-row w-full overflow-hidden" [ngStyle]="{
+      backgroundColor: theme.cardBackgroundColor,
+      borderRadius: theme.borderRadius,
+      boxShadow: theme.gridShadow,
+      minHeight: theme.minHeight,
+      height: theme.containerHeight,
+      width: theme.containerWidth,
+      transition: theme.transition
+    }">
+      <div class="w-full sm:w-1/3 border-r p-4 sm:p-6 overflow-y-auto" [ngStyle]="{
+        backgroundColor: theme.themeColor,
+        color: theme.themeTextColor,
+        transition: theme.transition
+      }">
+        <ng-content select="[left-pane]"></ng-content>
+      </div>
+      <div class="flex-1 p-4 sm:p-6 overflow-y-auto" [ngStyle]="{
+        backgroundColor: theme.themeColor,
+        color: theme.themeTextColor,
+        transition: theme.transition
+      }">
+        <ng-content select="[right-pane]"></ng-content>
       </div>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
 
-
-
-
-<!-- 🌗 Split Pane Layout -->
-<ng-container *ngIf="layoutStyle === 'split-pane'">
-  <div class="flex flex-col sm:flex-row w-full overflow-hidden"
-    [ngStyle]="{
-      backgroundColor: theme.cardBackgroundColor,
-      borderRadius: theme.borderRadius,
-      boxShadow: theme.gridShadow,
-      minHeight: theme.minHeight,
-      height: theme.containerHeight,
-      width: theme.containerWidth,
-      transition: theme.transition
-    }">
-    <div class="w-full sm:w-1/3 border-r p-4 sm:p-6 overflow-y-auto"
-      [ngStyle]="{
-        backgroundColor: theme.themeColor,
-        color: theme.themeTextColor,
-        transition: theme.transition
-      }">
-      <ng-content select="[left-pane]"></ng-content>
-    </div>
-    <div class="flex-1 p-4 sm:p-6 overflow-y-auto"
-      [ngStyle]="{
-        backgroundColor: theme.themeColor,
-        color: theme.themeTextColor,
-        transition: theme.transition
-      }">
-      <ng-content select="[right-pane]"></ng-content>
-    </div>
-  </div>
-</ng-container>
-
-<!-- 🕒 Timeline Layout -->
-<ng-container *ngIf="layoutStyle === 'timeline'">
-  <div class="w-full p-6 sm:p-8 space-y-6"
-    [ngStyle]="{
+  <!-- 🕒 Timeline Layout -->
+  <ng-container *ngIf="layoutStyle === 'timeline'">
+    <div class="w-full p-6 sm:p-8 space-y-6" [ngStyle]="{
       backgroundColor: theme.cardBackgroundColor,
       borderRadius: theme.borderRadius,
       boxShadow: theme.gridShadow,
       color: theme.themeTextColor,
       transition: theme.transition
     }">
-    <div class="border-l-4 border-[var(--accent-color, #0d9488)] pl-6 space-y-6">
-      <ng-content select="[timeline-item]"></ng-content>
+      <div class="border-l-4 border-[var(--accent-color, #0d9488)] pl-6 space-y-6">
+        <ng-content select="[timeline-item]"></ng-content>
+      </div>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
 
-<!-- 📦 Kanban Layout -->
-<ng-container *ngIf="layoutStyle === 'kanban'">
-  <div class="flex w-full overflow-x-auto space-x-4 sm:space-x-6 p-4 sm:p-6"
-    [ngStyle]="{
+  <!-- 📦 Kanban Layout -->
+  <ng-container *ngIf="layoutStyle === 'kanban'">
+    <div class="flex w-full overflow-x-auto space-x-4 sm:space-x-6 p-4 sm:p-6" [ngStyle]="{
       backgroundColor: theme.themeColor,
       color: theme.themeTextColor,
       minHeight: theme.minHeight,
@@ -361,40 +309,37 @@
       width: theme.containerWidth,
       transition: theme.transition
     }">
-    <ng-content select="[kanban-column]"></ng-content>
-  </div>
-</ng-container>
+      <ng-content select="[kanban-column]"></ng-content>
+    </div>
+  </ng-container>
 
-<!-- 📊 Dashboard Layout -->
-<ng-container *ngIf="layoutStyle === 'dashboard'">
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 p-4 sm:p-6"
-    [ngStyle]="{
+  <!-- 📊 Dashboard Layout -->
+  <ng-container *ngIf="layoutStyle === 'dashboard'">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 p-4 sm:p-6" [ngStyle]="{
       backgroundColor: theme.themeColor,
       color: theme.themeTextColor,
       transition: theme.transition
     }">
-    <ng-content select="[stat-card]"></ng-content>
-  </div>
-</ng-container>
+      <ng-content select="[stat-card]"></ng-content>
+    </div>
+  </ng-container>
 
-<!-- 📁 Accordion Layout -->
-<ng-container *ngIf="layoutStyle === 'accordion'">
-  <div class="w-full p-6 sm:p-8 space-y-4"
-    [ngStyle]="{
+  <!-- 📁 Accordion Layout -->
+  <ng-container *ngIf="layoutStyle === 'accordion'">
+    <div class="w-full p-6 sm:p-8 space-y-4" [ngStyle]="{
       backgroundColor: theme.cardBackgroundColor,
       borderRadius: theme.borderRadius,
       boxShadow: theme.gridShadow,
       color: theme.themeTextColor,
       transition: theme.transition
     }">
-    <ng-content select="[accordion-item]"></ng-content>
-  </div>
-</ng-container>
+      <ng-content select="[accordion-item]"></ng-content>
+    </div>
+  </ng-container>
 
-<!-- 🧭 Form Wizard Sidebar Layout -->
-<ng-container *ngIf="layoutStyle === 'form-wizard'">
-  <div class="flex flex-col sm:flex-row w-full overflow-hidden"
-    [ngStyle]="{
+  <!-- 🧭 Form Wizard Sidebar Layout -->
+  <ng-container *ngIf="layoutStyle === 'form-wizard'">
+    <div class="flex flex-col sm:flex-row w-full overflow-hidden" [ngStyle]="{
       backgroundColor: theme.cardBackgroundColor,
       borderRadius: theme.borderRadius,
       boxShadow: theme.gridShadow,
@@ -403,28 +348,26 @@
       width: theme.containerWidth,
       transition: theme.transition
     }">
-    <aside class="w-full sm:w-64 border-r bg-gray-50 dark:bg-gray-800 p-4"
-      [ngStyle]="{ transition: theme.transition }">
-      <ul class="space-y-3 text-sm sm:text-base font-medium">
-        <li *ngFor="let step of wizardSteps; let i = index"
-          class="cursor-pointer px-2 sm:px-3 py-1 sm:py-2 rounded hover:bg-[var(--accent-color, #0d9488)]/10 transition-all duration-200"
-          [ngClass]="{
+      <aside class="w-full sm:w-64 border-r bg-gray-50 dark:bg-gray-800 p-4"
+        [ngStyle]="{ transition: theme.transition }">
+        <ul class="space-y-3 text-sm sm:text-base font-medium">
+          <li *ngFor="let step of wizardSteps; let i = index"
+            class="cursor-pointer px-2 sm:px-3 py-1 sm:py-2 rounded hover:bg-[var(--accent-color, #0d9488)]/10 transition-all duration-200"
+            [ngClass]="{
             'text-[var(--accent-color, #0d9488)] font-bold bg-[var(--accent-color, #0d9488)]/5': i === currentStepIndex,
             'text-gray-600 dark:text-gray-300': i !== currentStepIndex
-          }"
-          (click)="goToStep(i)">
-          {{ step }}
-        </li>
-      </ul>
-    </aside>
-    <section class="flex-1 p-4 sm:p-6 overflow-y-auto"
-      [ngStyle]="{
+          }" (click)="goToStep(i)">
+            {{ step }}
+          </li>
+        </ul>
+      </aside>
+      <section class="flex-1 p-4 sm:p-6 overflow-y-auto" [ngStyle]="{
         backgroundColor: theme.themeColor,
         color: theme.themeTextColor,
         transition: theme.transition
       }">
-      <ng-content select="[wizard-step-content]"></ng-content>
-    </section>
-  </div>
-</ng-container>
+        <ng-content select="[wizard-step-content]"></ng-content>
+      </section>
+    </div>
+  </ng-container>
 </div>
