@@ -80,51 +80,56 @@
 
   <!-- ✍️ Create Layout -->
    
-
-  <!-- 🖼️ Modal Layout -->
+<!-- 🖼️ Modal Layout -->
+<ng-container *ngIf="layoutStyle === 'modal'">
   <div
-  class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
-  role="dialog"
-  aria-modal="true"
->
-  <div
-    class="relative overflow-y-auto bg-white dark:bg-gray-800 rounded-lg shadow-md w-auto"
-    [ngClass]="modalSizeClass"
-    [ngStyle]="{
-      maxHeight: '90vh',
-      minHeight: theme.minHeight,
-      backgroundColor: theme.cardBackgroundColor,
-      borderRadius: theme.borderRadius,
-      boxShadow: theme.gridShadow,
-      color: theme.themeTextColor,
-      transition: theme.transition
-    }"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+    role="dialog"
+    aria-modal="true"
   >
-    <!-- Modal Header -->
-    <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-      <h3 class="text-lg font-semibold" [ngStyle]="{ color: theme.themeTextColor }">
-        {{ title }}
-      </h3>
-      <button
-        (click)="closeCreateView()"
-        class="text-gray-500 hover:text-red-500 transition"
-        aria-label="Close"
+    <div
+      class="relative overflow-y-auto bg-white dark:bg-gray-800 rounded-lg shadow-md w-auto"
+      [ngClass]="modalSizeClass"
+      [ngStyle]="{
+        maxHeight: '90vh',
+        minHeight: theme.minHeight,
+        backgroundColor: theme.cardBackgroundColor,
+        borderRadius: theme.borderRadius,
+        boxShadow: theme.gridShadow,
+        color: theme.themeTextColor,
+        transition: theme.transition
+      }"
+    >
+      <!-- Modal Header -->
+      <div
+        class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700"
       >
-        <i class="fa-solid fa-xmark text-xl"></i>
-      </button>
-    </div>
+        <h3 class="text-lg font-semibold" [ngStyle]="{ color: theme.themeTextColor }">
+          {{ title }}
+        </h3>
+        <button
+          (click)="closeCreateView()"
+          class="text-gray-500 hover:text-red-500 transition"
+          aria-label="Close"
+        >
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
 
-    <!-- Modal Body -->
-    <div class="p-4 space-y-4">
-      <ng-content select="[create-view-content]"></ng-content>
-    </div>
+      <!-- Modal Body -->
+      <div class="p-4 space-y-4">
+        <ng-content select="[create-view-content]"></ng-content>
+      </div>
 
-    <!-- Modal Footer -->
-    <div class="flex justify-end gap-2 p-4 border-t border-gray-200 dark:border-gray-700">
-      <ng-content select="[modal-footer]"></ng-content>
+      <!-- Modal Footer -->
+      <div
+        class="flex justify-end gap-2 p-4 border-t border-gray-200 dark:border-gray-700"
+      >
+        <ng-content select="[modal-footer]"></ng-content>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
 
   
   <!-- 📑 Tabbed Layout 11-->
