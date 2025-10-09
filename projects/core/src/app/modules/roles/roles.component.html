@@ -5,30 +5,49 @@
   [title]="'Custom Grid'"
   (createClicked)="openCreate()"
 >
-  <div grid-view-content class="p-4 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-    <!-- Example Card 1 -->
+  <div grid-view-content class="p-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    
+    <!-- Card 1 -->
     <div
-      class="bg-white rounded-lg shadow-md p-5 flex flex-col items-center justify-center text-center hover:shadow-xl transition-shadow duration-300"
+      class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 flex flex-col items-center justify-center text-center hover:shadow-xl hover:scale-105 transition-transform duration-300"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-blue-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-blue-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M3 7h18M3 12h18M3 17h18" />
       </svg>
-      <span class="font-semibold text-lg">Custom Themed Card</span>
-      <span class="text-gray-500 text-sm mt-1">Additional info here</span>
+      <span class="font-bold text-lg">Custom Themed Card</span>
+      <span class="text-gray-500 dark:text-gray-300 text-sm mt-1">Additional info here</span>
+      <span class="mt-2 px-2 py-1 bg-blue-100 dark:bg-blue-700 text-blue-800 dark:text-white text-xs rounded-full">New</span>
     </div>
 
-    <!-- Example Card 2 -->
+    <!-- Card 2 -->
     <div
-      class="bg-white rounded-lg shadow-md p-5 flex flex-col items-center justify-center text-center hover:shadow-xl transition-shadow duration-300"
+      class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 flex flex-col items-center justify-center text-center hover:shadow-xl hover:scale-105 transition-transform duration-300"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-green-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-green-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M5 13l4 4L19 7" />
       </svg>
-      <span class="font-semibold text-lg">Verified Card</span>
-      <span class="text-gray-500 text-sm mt-1">Status info</span>
+      <span class="font-bold text-lg">Verified Card</span>
+      <span class="text-gray-500 dark:text-gray-300 text-sm mt-1">Status info</span>
+      <span class="mt-2 px-2 py-1 bg-green-100 dark:bg-green-700 text-green-800 dark:text-white text-xs rounded-full">Active</span>
     </div>
+
+    <!-- Card 3 -->
+    <div
+      class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 flex flex-col items-center justify-center text-center hover:shadow-xl hover:scale-105 transition-transform duration-300"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-red-500 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 4v16m8-8H4" />
+      </svg>
+      <span class="font-bold text-lg">Settings Card</span>
+      <span class="text-gray-500 dark:text-gray-300 text-sm mt-1">Configure app</span>
+      <span class="mt-2 px-2 py-1 bg-red-100 dark:bg-red-700 text-red-800 dark:text-white text-xs rounded-full">Alert</span>
+    </div>
+    
+    <!-- Add more cards as needed -->
+
   </div>
 </bl-frame>
 
@@ -39,33 +58,40 @@
   [title]="'Create View'"
   (backClicked)="backToGrid()"
 >
-  <form create-view-content class="bg-white p-6 rounded-xl shadow-lg space-y-5">
-    <!-- Name Input -->
-    <div>
-      <label class="block mb-1 font-medium text-gray-700">Name</label>
+  <form create-view-content class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg space-y-6 max-w-md mx-auto">
+    
+    <!-- Name Input with Icon -->
+    <div class="relative">
+      <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-3 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M5.121 17.804A6.966 6.966 0 0112 15a6.966 6.966 0 016.879 2.804M12 12a5 5 0 100-10 5 5 0 000 10z" />
+      </svg>
       <input
         type="text"
         placeholder="Enter your name..."
-        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        class="w-full border border-gray-300 dark:border-gray-600 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition"
       />
     </div>
 
-    <!-- Email Input -->
-    <div>
-      <label class="block mb-1 font-medium text-gray-700">Email</label>
+    <!-- Email Input with Icon -->
+    <div class="relative">
+      <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-3 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M16 12H8m0 0l4-4m0 8l-4-4" />
+      </svg>
       <input
         type="email"
         placeholder="Enter your email..."
-        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        class="w-full border border-gray-300 dark:border-gray-600 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition"
       />
     </div>
 
     <!-- Buttons -->
-    <div class="flex justify-end space-x-3">
+    <div class="flex justify-end space-x-4">
       <button
         type="button"
         (click)="backToGrid()"
-        class="px-5 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition"
+        class="px-5 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
       >
         Cancel
       </button>
@@ -80,5 +106,6 @@
         <span>Submit</span>
       </button>
     </div>
+
   </form>
 </bl-frame>
