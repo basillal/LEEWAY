@@ -1,11 +1,42 @@
+<!-- 🌐 Grid View -->
 <bl-frame *ngIf="layoutStyle === 'grid'" [layoutStyle]="'grid'" [title]="'Custom Grid'" (createClicked)="openCreate()">
-  <div grid-view-content class="p-4">Custom Themed Card</div>
+  <div grid-view-content class="p-4 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+    <!-- Example Card -->
+    <div class="bg-white rounded shadow p-4 flex flex-col items-center justify-center text-center hover:shadow-lg transition-shadow">
+      <span class="font-semibold text-lg">Custom Themed Card</span>
+      <span class="text-gray-500 text-sm mt-2">Additional info here</span>
+    </div>
+  </div>
 </bl-frame>
 
-<bl-frame *ngIf="layoutStyle === 'create'" [layoutStyle]="'modal'" [title]="'Create View'"
-  (backClicked)="backToGrid()">
-  <form create-view-content class="bg-red-500 p-4">
-    <input type="text" placeholder="Enter your name..." class="border p-2 rounded" />
-    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+<!-- ✍️ Create View -->
+<bl-frame *ngIf="layoutStyle === 'create'" [layoutStyle]="'modal'" [title]="'Create View'" (backClicked)="backToGrid()">
+  <form create-view-content class="bg-white p-6 rounded-lg shadow-md space-y-4">
+    <!-- Name Input -->
+    <div>
+      <label class="block mb-1 font-medium text-gray-700">Name</label>
+      <input
+        type="text"
+        placeholder="Enter your name..."
+        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end space-x-2">
+      <button
+        type="button"
+        (click)="backToGrid()"
+        class="px-4 py-2 rounded border border-gray-300 hover:bg-gray-100 transition"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+      >
+        Submit
+      </button>
+    </div>
   </form>
 </bl-frame>
