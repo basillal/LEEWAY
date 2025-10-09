@@ -1,90 +1,11 @@
-<!-- 🌐 Grid View -->
-<bl-frame
-  *ngIf="layoutStyle === 'grid'"
-  [layoutStyle]="'grid'"
-  [title]="'Custom Grid'"
-  (createClicked)="openCreate()"
->
-  <div grid-view-content class="p-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-    
-    <!-- Card 1 -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 flex flex-col items-center justify-center text-center hover:shadow-lg transition">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-blue-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M3 7h18M3 12h18M3 17h18" />
-      </svg>
-      <span class="font-semibold text-lg">Custom Card</span>
-      <span class="text-gray-500 dark:text-gray-300 text-sm mt-1">Additional info</span>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 flex flex-col items-center justify-center text-center hover:shadow-lg transition">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-green-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M5 13l4 4L19 7" />
-      </svg>
-      <span class="font-semibold text-lg">Verified Card</span>
-      <span class="text-gray-500 dark:text-gray-300 text-sm mt-1">Status info</span>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 flex flex-col items-center justify-center text-center hover:shadow-lg transition">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-red-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M12 4v16m8-8H4" />
-      </svg>
-      <span class="font-semibold text-lg">Settings Card</span>
-      <span class="text-gray-500 dark:text-gray-300 text-sm mt-1">Configuration</span>
-    </div>
-
-  </div>
+<bl-frame *ngIf="layoutStyle === 'grid'" [layoutStyle]="'grid'" [title]="'Custom Grid'" (createClicked)="openCreate()">
+  <div grid-view-content class="p-4">Custom Themed Card</div>
 </bl-frame>
 
-<!-- ✍️ Create View -->
-<bl-frame
-  *ngIf="layoutStyle === 'create'"
-  [layoutStyle]="'modal'"
-  [title]="'Create View'"
-  (backClicked)="backToGrid()"
->
-  <form create-view-content class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md space-y-5 max-w-md mx-auto">
-    
-    <!-- Name Input -->
-    <div>
-      <label class="block mb-1 text-gray-700 dark:text-gray-200 font-medium">Name</label>
-      <input
-        type="text"
-        placeholder="Enter your name"
-        class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition"
-      />
-    </div>
-
-    <!-- Email Input -->
-    <div>
-      <label class="block mb-1 text-gray-700 dark:text-gray-200 font-medium">Email</label>
-      <input
-        type="email"
-        placeholder="Enter your email"
-        class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white transition"
-      />
-    </div>
-
-    <!-- Buttons -->
-    <div class="flex justify-end space-x-3">
-      <button
-        type="button"
-        (click)="backToGrid()"
-        class="px-5 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-      >
-        Cancel
-      </button>
-      <button
-        type="submit"
-        class="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
-      >
-        Submit
-      </button>
-    </div>
-
+<bl-frame *ngIf="layoutStyle === 'create'" [layoutStyle]="'modal'" [title]="'Create View'"
+  (backClicked)="backToGrid()">
+  <form create-view-content class="bg-red-500 p-4">
+    <input type="text" placeholder="Enter your name..." class="border p-2 rounded" />
+    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
   </form>
 </bl-frame>
