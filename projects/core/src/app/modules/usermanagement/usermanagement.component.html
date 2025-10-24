@@ -260,3 +260,266 @@
     <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">This is Form Wizard step content</p>
   </div>
 </bl-frame>
+
+<!-- Top Button Bar -->
+<div class="flex flex-wrap gap-2 sm:gap-3 p-4 sm:p-6 bg-gray-100 dark:bg-gray-900 rounded-lg shadow mb-6">
+  <button *ngFor="let style of availableLayouts"
+    (click)="toggleLayout(style)"
+    class="px-3 sm:px-4 py-2 rounded-lg border text-sm sm:text-base font-medium transition-all duration-200 hover:scale-105"
+    [ngClass]="{
+      'bg-[var(--accent-color, #0d9488)] text-white border-[var(--accent-color, #0d9488)]': isActive(style),
+      'bg-white text-gray-700 dark:bg-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600': !isActive(style)
+    }">
+    {{ style | titlecase }}
+  </button>
+</div>
+
+<!-- Layout Customization Options -->
+<div class="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 p-4 sm:p-6 bg-gray-50 dark:bg-gray-900 border rounded-lg shadow mb-8">
+  <label class="flex items-center gap-2 text-sm sm:text-base">
+    <input type="checkbox" [(ngModel)]="customSettings.showShadow" class="h-4 w-4 text-[var(--accent-color, #0d9488)] rounded" />
+    Show Shadow
+  </label>
+  <label class="flex items-center gap-2 text-sm sm:text-base">
+    <span>Border Radius</span>
+    <select [(ngModel)]="customSettings.borderRadius" class="border rounded px-2 py-1 text-sm sm:text-base bg-white dark:bg-gray-700">
+      <option value="0rem">None</option>
+      <option value="0.5rem">Small</option>
+      <option value="1rem">Medium</option>
+      <option value="2rem">Large</option>
+    </select>
+  </label>
+  <label class="flex items-center gap-2 text-sm sm:text-base">
+    <span>Card Background</span>
+    <input type="color" [(ngModel)]="customSettings.cardBackgroundColor" class="h-8 w-8 p-0 border rounded" />
+  </label>
+  <label class="flex items-center gap-2 text-sm sm:text-base">
+    <span>Theme Color</span>
+    <input type="color" [(ngModel)]="customSettings.themeColor" class="h-8 w-8 p-0 border rounded" />
+  </label>
+  <label class="flex items-center gap-2 text-sm sm:text-base">
+    <span>Text Color</span>
+    <input type="color" [(ngModel)]="customSettings.themeTextColor" class="h-8 w-8 p-0 border rounded" />
+  </label>
+  <label class="flex items-center gap-2 text-sm sm:text-base">
+    <span>Accent Color</span>
+    <input type="color" [(ngModel)]="customSettings.themeAccentColor" class="h-8 w-8 p-0 border rounded" />
+  </label>
+</div>
+
+<!-- Dynamically Render Layouts -->
+<bl-frame
+      *ngIf="isActive('grid')"
+      layoutStyle="grid"
+      title="Grid Layout"
+      [theme]="customSettings"
+      [containerWidth]="'100%'"
+      [containerHeight]="'auto'"
+      [minHeight]="'400px'"
+    >
+      <div grid-view-content>
+        <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded shadow-sm">
+          <p class="text-sm text-gray-700 dark:text-gray-200">This is Grid layout content</p>
+        </div>
+      </div>
+    </bl-frame>
+
+<bl-frame
+  *ngIf="isActive('small')"
+  layoutStyle="small"
+  title="Small Layout"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'400px'">
+  <div grid-view-content>
+    <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded">
+      <p class="text-sm text-gray-700 dark:text-gray-200">This is Small layout content</p>
+    </div>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('create')"
+  layoutStyle="create"
+  title="Create Layout"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'400px'">
+  <div create-view-content>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">This is Create layout content</p>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('modal')"
+  layoutStyle="modal"
+  title="Modal Layout"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'300px'">
+  <div create-view-content>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">This is Modal layout content</p>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('tabbed')"
+  layoutStyle="tabbed"
+  title="Tabbed Layout"
+  [tabs]="['Tab 1', 'Tab 2']"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'400px'">
+  <div tab-view-content>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Tabbed Layout Content</p>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('sidebar')"
+  layoutStyle="sidebar"
+  title="Sidebar Layout"
+  [tabs]="['Dashboard', 'Profile']"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'100vh'"
+  [minHeight]="'400px'">
+  <div tab-view-content>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Sidebar Layout Content</p>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('card-stack')"
+  layoutStyle="card-stack"
+  title="Card Stack Layout"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'400px'">
+  <div grid-view-content>
+    <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded text-gray-800 dark:text-gray-200">
+      This is Card Stack layout
+    </div>
+  </div>
+</bl-frame>
+
+
+
+
+<bl-frame
+  *ngIf="isActive('wizard')"
+  layoutStyle="wizard"
+  title="Step Wizard Layout"
+  [wizardSteps]="['Step One', 'Step Two', 'Final Step', 'Extra Step']"
+>
+  <div wizard-step-content>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">This is Step Wizard content</p>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('split-pane')"
+  layoutStyle="split-pane"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'400px'">
+  <div left-pane>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Left Pane Content</p>
+  </div>
+  <div right-pane>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Right Pane Content</p>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('timeline')"
+  layoutStyle="timeline"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'400px'">
+  <div timeline-item>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Timeline Item 1</p>
+  </div>
+  <div timeline-item>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Timeline Item 2</p>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('kanban')"
+  layoutStyle="kanban"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'400px'">
+  <div kanban-column>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">To Do</p>
+  </div>
+  <div kanban-column>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">In Progress</p>
+  </div>
+  <div kanban-column>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Done</p>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('dashboard')"
+  layoutStyle="dashboard"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'400px'">
+  <div stat-card>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Users: 150</p>
+  </div>
+  <div stat-card>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Sales: ₹20,000</p>
+  </div>
+  <div stat-card>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Orders: 320</p>
+  </div>
+  <div stat-card>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Profit: ₹4,500</p>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('accordion')"
+  layoutStyle="accordion"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'400px'">
+  <div accordion-item>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Section 1: Introduction</p>
+  </div>
+  <div accordion-item>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Section 2: Features</p>
+  </div>
+  <div accordion-item>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">Section 3: Summary</p>
+  </div>
+</bl-frame>
+
+<bl-frame
+  *ngIf="isActive('form-wizard')"
+  layoutStyle="form-wizard"
+  title="Form Wizard"
+  [wizardSteps]="['Step 1', 'Step 2', 'Step 3']"
+  [currentStepIndex]="0"
+  [theme]="customSettings"
+  [containerWidth]="'100%'"
+  [containerHeight]="'auto'"
+  [minHeight]="'400px'">
+  <div wizard-step-content>
+    <p class="text-base sm:text-lg text-gray-700 dark:text-gray-200">This is Form Wizard step content</p>
+  </div>
+</bl-frame>
