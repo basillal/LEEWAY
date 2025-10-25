@@ -1,9 +1,11 @@
 {
   "version": 2,
   "builds": [
-    { "src": "dist/core/index.html", "use": "@vercel/static" }
+    { "src": "dist/core/**", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "/remoteEntry.js", "dest": "/remoteEntry.js" },
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
