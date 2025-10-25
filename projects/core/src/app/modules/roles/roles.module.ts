@@ -4,7 +4,6 @@ import { RolesComponent } from './roles.component';
 import { RouterModule, Routes } from '@angular/router';
 // import { CreateViewLibModule } from '@libs/create-view-lib';
 import { BasicReportLibModule } from '@libs/basic-report-lib';
-import { DynamicFormModule } from '@libs/dynamic-form';
 import { BlFrameModule } from '@libs/bl-frame';
 const routes: Routes = [
   {
@@ -22,7 +21,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     BlFrameModule,
     BasicReportLibModule,
-    DynamicFormModule
   ]
 })
 export class RolesModule { }
