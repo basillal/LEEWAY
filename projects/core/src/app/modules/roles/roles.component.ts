@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { InputConfig } from '@libs/dynamic-form';
 
 @Component({
   selector: 'app-roles',
@@ -9,16 +8,5 @@ import { InputConfig } from '@libs/dynamic-form';
 export class RolesComponent {
 
 
-  layoutStyle: 'grid' | 'create' = 'grid';
-
-openCreate() {
-  this.layoutStyle = 'create';
-}
-
-backToGrid() {
-  this.layoutStyle = 'grid';
-}
-
-  
 
 }
