@@ -1,0 +1,81 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="bg-white">
+  <div class="grid grid-cols-1 sm:grid-cols-4 gap-8">
+    <ng-container *ngFor="let input of inputConfig">
+      <div *ngIf="shouldShow(input)" [class]="input.wrapperClassName || 'col-span-2'">
+        <label class="block text-xs font-semibold text-gray-700 mb-1">
+          {{ input.label }}
+        </label>
+
+        <!-- Text/Number/Password Inputs -->
+        <input
+          *ngIf="['text', 'number', 'password', 'email', 'date', 'tel'].includes(input.type)"
+          [type]="input.type"
+          [formControlName]="input.key"
+          [placeholder]="input.placeholder"
+          [ngClass]="input.className || 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'"
+        />
+
+        <!-- Select Dropdown -->
+        <select
+          *ngIf="input.type === 'select'"
+          [formControlName]="input.key"
+          [ngClass]="input.className || 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'"
+        >
+          <option disabled value="">Select {{ input.label }}</option>
+          <option *ngFor="let option of input.options" [value]="option.value">{{ option.label }}</option>
+        </select>
+
+        <!-- Checkbox -->
+        <div *ngIf="input.type === 'checkbox'" class="flex items-center">
+          <input
+            type="checkbox"
+            [formControlName]="input.key"
+            [ngClass]="input.className || 'h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500'"
+          />
+          <label class="ml-2 block text-xs text-gray-700">{{ input.label }}</label>
+        </div>
+
+        <!-- Validation error -->
+        <div *ngIf="getControl(input.key)?.invalid && getControl(input.key)?.touched" class="text-red-500 text-xs mt-1">
+          <ng-container *ngIf="getControl(input.key)?.errors?.['required']">{{ input.label }} is required.</ng-container>
+          <ng-container *ngIf="getControl(input.key)?.errors?.['minlength']">
+            {{ input.label }} must be at least {{ input.minLength }} characters.
+          </ng-container>
+          <ng-container *ngIf="getControl(input.key)?.errors?.['maxlength']">
+            {{ input.label }} cannot be more than {{ input.maxLength }} characters.
+          </ng-container>
+          <ng-container *ngIf="getControl(input.key)?.errors?.['pattern']">
+            Invalid format for {{ input.label }}.
+          </ng-container>
+          <ng-container *ngIf="getControl(input.key)?.errors?.['min']">
+            {{ input.label }} must be at least {{ input.min }}.
+          </ng-container>
+          <ng-container *ngIf="getControl(input.key)?.errors?.['max']">
+            {{ input.label }} must be less than {{ input.max }}.
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Submit / Reset -->
+  <div class="flex justify-end mt-6 space-x-2">
+    <button
+      type="button"
+      (click)="onReset()"
+      class="bg-gray-300 text-xs px-6 py-2 rounded hover:bg-gray-400 transition"
+    >
+      Reset
+    </button>
+    <button (click)="onSubmit()"  *ngIf="!isEditMode"
+      type="submit"
+      class="bg-blue-800 text-white text-xs font-medium px-6 py-2 rounded hover:bg-blue-900 transition"
+    >
+      Submit
+    </button>
+    <button type="submit"  (click)="onSubmit()" 
+    class="bg-green-800 text-white text-xs font-medium px-6 py-2 rounded hover:bg-green-900 transition"    *ngIf="isEditMode">
+    Update
+  </button>
+  </div>
+</form>

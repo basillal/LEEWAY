@@ -55,7 +55,10 @@ module.exports = {
         exposes: {
                 './Component': './projects/core/src/app/app.component.ts',
                 './UsermanagementModule': './projects/core/src/app/modules/usermanagement/usermanagement.module.ts',
-                './DashboardModule': './projects/core/src/app/modules/dashboard/dashboard.module.ts'
+                './DashboardModule': './projects/core/src/app/modules/dashboard/dashboard.module.ts',
+                './RolesModule': './projects/core/src/app/modules/roles/roles.module.ts',
+                
+
               },
 
 

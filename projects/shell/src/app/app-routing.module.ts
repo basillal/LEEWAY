@@ -12,7 +12,7 @@ const routes: Routes = [
     loadChildren: () => 
       loadRemoteModule({
         type: 'module',
-        remoteEntry: 'http://localhost:4201/remoteEntry.js',
+        remoteEntry: 'https://core-leeway.vercel.app/remoteEntry.js',
         exposedModule: './DashboardModule'
       }).then((m) => {
         console.log('Loaded Module:', m);
@@ -32,6 +32,21 @@ const routes: Routes = [
     }).then((m) => {
       console.log('Loaded Module:', m);
       return m.UsermanagementModule;
+    }).catch((err) => {
+      console.error('Error loading remote module', err);
+      throw err;
+    })
+},
+{
+  path: 'roles',
+  loadChildren: () => 
+    loadRemoteModule({
+      type: 'module',
+      remoteEntry: 'https://core-leeway.vercel.app/remoteEntry.js',
+      exposedModule: './RolesModule'
+    }).then((m) => {
+      console.log('Loaded Module:', m);
+      return m.RolesModule;
     }).catch((err) => {
       console.error('Error loading remote module', err);
       throw err;

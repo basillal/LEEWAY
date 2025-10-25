@@ -12,7 +12,7 @@
           <!-- Show selected items (only first 2) -->
           <ng-container *ngFor="let item of selectedItems.slice(0, itemsSelectedShowLimit)">
             <div class="flex items-center bg-gray-200 px-2 py-1 ml-2 rounded-full text-sm">
-              <span class="text-gray-700">{{ item[textField] }}</span>
+              <span class="text-gray-700">{{ (item[textField] + '') | slice:0:5 }}</span>
               <button (click)="removeItem(item, $event)"
                 class="ml-2 text-gray-500 hover:text-red-500 focus:outline-none">
                 ✖
@@ -41,12 +41,15 @@
       <div *ngIf="isDropdownOpen"
         class="absolute mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-50">
 
-        <button *ngIf="showClearButton" 
-        class="text-[10px] sm:text-xs text-red-500 hover:text-red-800 ml-auto p-2"
-        (click)="clearSelection()">
-        Reset
-      </button>
-  
+
+
+      <div class="w-full text-right" *ngIf="showClearButton">
+        <button class="text-[10px] sm:text-xs text-red-500 hover:text-red-800 p-2" (click)="clearSelection()">
+          Reset
+        </button>
+      </div>
+      
+
         <!-- Search Box -->
         <div *ngIf="allowSearchFilter" class="p-2 border-b border-gray-200 sticky top-0 bg-white z-10">
           <input type="text" [(ngModel)]="searchText" placeholder="Search..."
@@ -89,6 +92,6 @@
     <span *ngIf="isRequired" style="color: red;" class="text-lg ml-1 relative -mt-2 pr-2 pb-4 pt-1">*</span>
 
 
- 
+
   </div>
 </div>

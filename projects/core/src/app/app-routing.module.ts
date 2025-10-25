@@ -21,6 +21,13 @@ const routes: Routes = [
         m => m.UsermanagementModule
       )
   },
+  {
+    path: 'roles',
+    loadChildren: () =>
+      import('./modules/roles/roles.module').then(
+        m => m.RolesModule
+      )
+  },
 ];
 
 @NgModule({

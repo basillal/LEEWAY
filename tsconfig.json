@@ -20,6 +20,19 @@
         "dist/libs/basic-report-lib",
         "dist/libs/basic-report-lib"
       ],
+      "@libs/bl-frame": [
+        "dist/libs/bl-frame",
+        "dist/libs/bl-frame"
+      ],
+      "@libs/create-view-lib": [
+        "dist/libs/create-view-lib"
+      ],
+      "@libs/dynamic-form": [
+        "dist/libs/dynamic-form"
+      ],
+      "@libs/dynamic-from": [
+        "dist/libs/dynamic-from"
+      ],
       "@libs/multi-dropdown-lib": [
         "dist/libs/multi-dropdown-lib"
       ],

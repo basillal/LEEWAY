@@ -1,0 +1,78 @@
+{
+  "name": "bl-frame",
+  "version": "0.0.1",
+  "description": "A flexible Angular component library for creating responsive layouts like grids, tabs, wizards, and more, styled with Tailwind CSS.",
+  "author": "Your Name <your.email@example.com> (https://github.com/your-github-username) (https://www.linkedin.com/in/your-linkedin-profile)",
+  "license": "MIT",
+  "homepage": "https://github.com/your-github-username/bl-frame#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-github-username/bl-frame.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-github-username/bl-frame/issues"
+  },
+  "keywords": [
+    "angular",
+    "component",
+    "layout",
+    "grid",
+    "tabs",
+    "wizard",
+    "modal",
+    "sidebar",
+    "tailwindcss",
+    "ui",
+    "frontend",
+    "responsive",
+    "dashboard",
+    "form-wizard",
+    "kanban",
+    "timeline"
+  ],
+  "module": "fesm2022/bl-frame.mjs",
+  "main": "fesm2022/bl-frame.mjs",
+  "es2022": "esm2022/bl-frame.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "esm2022": "./esm2022/bl-frame.mjs",
+      "esm": "./esm2022/bl-frame.mjs",
+      "default": "./fesm2022/bl-frame.mjs"
+    }
+  },
+  "peerDependencies": {
+    "@angular/common": "^16.2.0",
+    "@angular/core": "^16.2.0",
+    "tailwindcss": "^3.4.15",
+    "postcss": "^8.4.30",
+    "autoprefixer": "^10.4.15",
+    "@fortawesome/fontawesome-free": "^6.6.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^16.2.0",
+    "@angular-eslint/builder": "^16.0.0",
+    "@angular-eslint/schematics": "^16.0.0",
+    "@compodoc/compodoc": "^1.1.23",
+    "@types/jasmine": "^4.0.0",
+    "jasmine-core": "^4.0.0",
+    "karma": "^6.4.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage": "^2.2.0",
+    "karma-jasmine": "^5.1.0",
+    "ng-packagr": "^16.2.0",
+    "typescript": "~4.9.0"
+  },
+  "scripts": {
+    "build": "ng build --configuration production",
+    "prepublishOnly": "npm run build",
+    "postinstall": "echo '🚨 Please ensure Tailwind CSS is installed and configured in your project. Refer to https://tailwindcss.com/docs/guides/angular for setup.'",
+    "test": "ng test --code-coverage",
+    "lint": "ng lint",
+    "docs": "compodoc -p tsconfig.json -s",
+    "watch": "ng build --watch",
+    "pack": "npm pack"
+  },
+  "sideEffects": false
+}
