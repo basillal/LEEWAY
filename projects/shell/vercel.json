@@ -1,7 +1,7 @@
 {
   "version": 2,
   "builds": [
-    { "src": "dist/shell/**", "use": "@vercel/static" }
+    { "src": "shell/**", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/remoteEntry.js", "dest": "/remoteEntry.js" },
