@@ -36,15 +36,20 @@
       "@libs/multi-dropdown-lib": [
         "dist/libs/multi-dropdown-lib"
       ],
-      "ag-grid-lib": [
-        "dist/ag-grid-lib",
-        "dist/ag-grid-lib"
+      "@libs/menu-header": [
+        "dist/libs/menu-header"
+      ],
+      "@libs/menu-header-lib": [
+        "dist/libs/menu-header-lib"
+      ],
+      "@libs/shared-auth": [
+        "dist/libs/shared-auth"
+      ],
+      "@libs/left-menu-lib": [
+        "dist/libs/left-menu-lib"
       ],
       "basic-report-lib": [
         "dist/reports/basic-report-lib"
-      ],
-      "left-menu-lib": [
-        "dist/left-menu-lib"
       ]
     },
     "noImplicitReturns": true,

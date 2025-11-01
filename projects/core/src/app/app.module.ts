@@ -9,6 +9,9 @@ import { AgGridLibModule } from '@libs/ag-grid-lib';
 import { MultiDropdownLibModule } from '@libs/multi-dropdown-lib';
 import { BasicReportLibModule } from '@libs/basic-report-lib';
 import { BlFrameModule } from '@libs/bl-frame';
+import { environment } from '../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -20,10 +23,13 @@ import { BlFrameModule } from '@libs/bl-frame';
     AgGridLibModule,
     MultiDropdownLibModule,
     BasicReportLibModule,
-    BlFrameModule
+    BlFrameModule,
+    DashboardModule,
+    BrowserAnimationsModule
   
   ],
-  providers: [],
+  providers: [    { provide: 'env', useValue: environment }
+  ],
   bootstrap: [AppComponent],
   exports: [AppComponent,DashboardModule]
 

@@ -5,6 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 // import { CreateViewLibModule } from '@libs/create-view-lib';
 import { BasicReportLibModule } from '@libs/basic-report-lib';
 import { BlFrameModule } from '@libs/bl-frame';
+import { LeftMenuLibModule } from '@libs/left-menu-lib';
+import { environment } from 'projects/core/src/environments/environment';
 const routes: Routes = [
   {
     path: '',
@@ -16,11 +18,14 @@ const routes: Routes = [
   declarations: [
     RolesComponent
   ],
+    providers: [{ provide: 'env', useValue: environment }]
+  ,
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     BlFrameModule,
     BasicReportLibModule,
-  ]
+    LeftMenuLibModule
+]
 })
 export class RolesModule { }

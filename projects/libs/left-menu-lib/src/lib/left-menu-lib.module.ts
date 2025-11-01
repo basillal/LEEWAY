@@ -1,17 +1,26 @@
 import { NgModule } from '@angular/core';
 import { LeftMenuLibComponent } from './left-menu-lib.component';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { TabCommunicationService } from './tab-communication.service';
+
 
 
 @NgModule({
   declarations: [
-    LeftMenuLibComponent
+    LeftMenuLibComponent,
   ],
   imports: [
-    RouterModule
+    RouterModule,
+    CommonModule,
+    HttpClientModule,
+    FormsModule
   ],
   exports: [
-    LeftMenuLibComponent
-  ]
+    LeftMenuLibComponent,
+  ],
+  providers: [TabCommunicationService]
 })
 export class LeftMenuLibModule { }

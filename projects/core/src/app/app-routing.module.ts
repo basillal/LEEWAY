@@ -1,11 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SharedAuthComponent } from '@libs/shared-auth';
 
 const routes: Routes = [
   { path: '', 
     redirectTo: 'dashboard',
      pathMatch: 'full'
   }, 
+
+  {
+    path: 'login',
+    component: SharedAuthComponent,
+    pathMatch: 'full',
+    data: {
+      module: 'Shell',
+    },
+  },
   {
     path: 'dashboard',
     loadChildren: () =>

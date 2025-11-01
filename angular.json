@@ -340,24 +340,123 @@
 					}
 				}
 			}
+		},
+		"@libs/create-view-lib": {
+			"projectType": "library",
+			"root": "projects/libs/create-view-lib",
+			"sourceRoot": "projects/libs/create-view-lib/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/libs/create-view-lib/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/libs/create-view-lib/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/libs/create-view-lib/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"tsConfig": "projects/libs/create-view-lib/tsconfig.spec.json",
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						]
+					}
+				}
+			}
+		},
+		"@libs/dynamic-form": {
+			"projectType": "library",
+			"root": "projects/libs/dynamic-form",
+			"sourceRoot": "projects/libs/dynamic-form/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/libs/dynamic-form/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/libs/dynamic-form/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/libs/dynamic-form/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"tsConfig": "projects/libs/dynamic-form/tsconfig.spec.json",
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						]
+					}
+				}
+			}
+		},
+		"@libs/bl-frame": {
+			"projectType": "library",
+			"root": "projects/libs/bl-frame",
+			"sourceRoot": "projects/libs/bl-frame/src",
+			"prefix": "lib",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-angular:ng-packagr",
+					"options": {
+						"project": "projects/libs/bl-frame/ng-package.json"
+					},
+					"configurations": {
+						"production": {
+							"tsConfig": "projects/libs/bl-frame/tsconfig.lib.prod.json"
+						},
+						"development": {
+							"tsConfig": "projects/libs/bl-frame/tsconfig.lib.json"
+						}
+					},
+					"defaultConfiguration": "production"
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"tsConfig": "projects/libs/bl-frame/tsconfig.spec.json",
+						"polyfills": [
+							"zone.js",
+							"zone.js/testing"
+						]
+					}
+				}
+			}
     },
-    "@libs/create-view-lib": {
+    "@libs/shared-auth": {
       "projectType": "library",
-      "root": "projects/libs/create-view-lib",
-      "sourceRoot": "projects/libs/create-view-lib/src",
+      "root": "projects/libs/shared-auth",
+      "sourceRoot": "projects/libs/shared-auth/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/libs/create-view-lib/ng-package.json"
+            "project": "projects/libs/shared-auth/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/libs/create-view-lib/tsconfig.lib.prod.json"
+              "tsConfig": "projects/libs/shared-auth/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/libs/create-view-lib/tsconfig.lib.json"
+              "tsConfig": "projects/libs/shared-auth/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -365,73 +464,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/libs/create-view-lib/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
-          }
-        }
-      }
-    },
-    "@libs/dynamic-form": {
-      "projectType": "library",
-      "root": "projects/libs/dynamic-form",
-      "sourceRoot": "projects/libs/dynamic-form/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/libs/dynamic-form/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/libs/dynamic-form/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/libs/dynamic-form/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/libs/dynamic-form/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
-          }
-        }
-      }
-    },
-    "@libs/bl-frame": {
-      "projectType": "library",
-      "root": "projects/libs/bl-frame",
-      "sourceRoot": "projects/libs/bl-frame/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/libs/bl-frame/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/libs/bl-frame/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/libs/bl-frame/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/libs/bl-frame/tsconfig.spec.json",
+            "tsConfig": "projects/libs/shared-auth/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"

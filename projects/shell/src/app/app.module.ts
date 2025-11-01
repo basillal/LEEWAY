@@ -4,19 +4,25 @@ import { AgGridModule } from 'ag-grid-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LeftMenuLibModule } from 'dist/libs/left-menu-lib';
+import { LeftMenuLibModule } from '@libs/left-menu-lib';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from 'projects/core/src/environments/environment';
+import { AppLayoutComponent } from './modules/app-layout/app-layout.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AppLayoutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AgGridModule,
     LeftMenuLibModule,
-    AgGridModule
+    BrowserAnimationsModule
+    
   ],
-  providers: [],
+  providers: [{ provide: 'env', useValue: environment }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

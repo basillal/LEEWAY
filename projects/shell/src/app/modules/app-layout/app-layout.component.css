@@ -1,0 +1,319 @@
+.layout {
+    display: flex;
+    height: 100vh;
+    font-family: "Inter", sans-serif;
+  }
+  
+  /* .left-menu {
+    flex-shrink: 0;
+    transition: width 0.3s ease;
+    font-family: "Inter", sans-serif;
+  } */
+  
+  /* .left-menu.hidden {
+    width: 0;
+    overflow: hidden;
+  } */
+  
+  .main-content {
+    /* flex-grow: 1; */
+    /* padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px; */
+    /* display: flex; */
+    width: 100%;
+    overflow-y: auto;
+  
+    overflow-x: hidden;
+  /* 
+    overflow-y: scroll; */
+    font-family: "Inter", sans-serif;
+  }
+  
+  /* Full-screen mode adjustments */
+  .full-screen-layout {
+    height: 100%; /* Full height without any header */
+  }
+  
+  .full-screen-layout .main-content {
+    width: 100%;
+    height: 100%;
+    padding: 0; /* Remove any padding to fit content into the full screen */
+  }
+  
+  /* Hide left menu and header when in full screen */
+  .hidden {
+    display: none !important;
+  }
+  
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+  
+  .container_main {
+    background-color: #f3f7f9;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  
+  }
+  
+  h1 {
+    color: #2b414d;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    opacity: 0;
+  }
+  
+  .bold {
+    color: #2b414d;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-size: 25px;
+    font-style: normal;
+  }
+  
+  p {
+    opacity: 0;
+    color: #2b414d;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  ._main_head {
+    padding-top: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .para {
+  
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1em;
+  }
+  
+  .para p {
+    width: 600px;
+    line-height: 20px;
+    text-align: center;
+  }
+  
+  .left_container {
+    height: 100%;
+    position: absolute;
+    top: 19px;
+    width: fit-content;
+    overflow: hidden;
+    will-change: transform;
+  }
+  
+  .right_container {
+    height:100%;
+    position: absolute;
+    top: 19px;
+    right: 0;
+    width: fit-content;
+    overflow: hidden;
+    will-change: transform;
+  }
+  
+  .cont_left {
+    width: 370px;
+    height: 310px;
+    background-color: white;
+    border-radius: 40px;
+    transform-style: preserve-3d;
+    transform: translateX(-100px) translateZ(-9.7rem);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px;
+    border-radius: 25px;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: relative;
+    will-change: transform;
+    z-index: -1;
+  }
+  
+  .cont_right {
+    z-index: -1;
+    width: 440px;
+    height: 460px;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px;
+    background-color: #ffffff;
+    transform-style: preserve-3d;
+    border-radius: 40px;
+    transform: translateZ(1rem);
+    position: relative;
+    backface-visibility: hidden;
+  }
+  
+  .cont_middle {
+    transform-style: preserve-3d;
+    width: 370px;
+    -webkit-backface-visibility: hidden;
+    height: 310px;
+    backface-visibility: hidden;
+    background-color: #ffffff;
+    border-radius: 40px;
+    will-change: transform;
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px;
+    transform: translateX(100px) translateZ(-9.7rem);
+  }
+  
+  .container_card {
+    transform-style: preserve-3d;
+    perspective: 800px;
+    height: 75%;
+    overflow: hidden;
+    display: flex;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  
+  
+  .content {
+   
+    width: 100%;
+    height: 100%;
+  }
+  
+  .top h4 {
+    color: #2b414d;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    font-weight: bolder;
+  }
+  
+  .top_middle h4 {
+    color: #2b414d;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-weight: bolder;
+  }
+  
+  .top {
+    padding: 1em;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+  
+  .image_3 {
+    object-fit: cover;
+    width:auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+   
+  }
+  .image_33 {
+    object-fit: cover;
+    width:100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+   
+  }
+  
+  .image_33 img{
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+  }
+  
+  
+  
+  .image_31 {
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/Frame 1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .top_middle {
+    padding:1em;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+  
+  /* Responsive Breakpoints remain the same */
+  /* For mobile devices */
+  @media only screen and (max-width: 600px) {
+  .left_container{
+    display: none;
+  }
+  .right_container{
+    display: none;
+  }
+  .container_card{
+    display: none;
+  }
+  
+  .container_main{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  .para p{
+    width:300px ;
+  }
+  
+  #head{
+    padding-top: 0px;
+    margin-top: 0px;
+  }
+  .para{
+    margin-bottom: 5rem;
+  }
+  }
+  
+  
+  /* // for PC devices */
+  @media only screen and (min-width: 600px) {
+    .left_container{
+      display: block;
+    }
+    .right_container{
+      display: block;
+    }
+    
+    .container_card{
+      display: flex;
+    }
+    #parasub{
+      width: 100% !important;
+    }
+    .para p{
+      width:600px ;
+    }
+  }
