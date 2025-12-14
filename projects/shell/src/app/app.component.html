@@ -1,5 +1,9 @@
-<div class="app-container">
-    <lib-left-menu-lib></lib-left-menu-lib>
-    <router-outlet></router-outlet> <!-- Placeholder for routed views -->
+<div class="flex h-screen w-full">
+  <!-- Left Menu -->
+  <lib-left-menu-lib class="w-64 bg-gray-100"></lib-left-menu-lib>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-5 pt-10 overflow-auto">
+    <router-outlet></router-outlet>
   </div>
-  
+</div>
